@@ -10,16 +10,26 @@ public class InstagramPost extends Post
         this.saveToCollection = saveToCollection;
     }
 
+    public boolean isSaveToCollection()
+    {
+        return saveToCollection;
+    }
+
+    public void setSaveToCollection(boolean saveToCollection)
+    {
+        this.saveToCollection = saveToCollection;
+    }
+
     @Override
     public String toString()
     {
         if (saveToCollection)
         {
-            return super.toString() + "\n\n^Save to collection label is filled";
+            return "\t\tInstagram\n" + super.toString() + "\n\n^Save to collection label is filled";
         }
         else
         {
-            return super.toString() + "\n\n^Save to collection label is empty";
+            return "\t\tInstagram\n" + super.toString() + "\n\n^Save to collection label is empty";
         }
     }
 
@@ -45,4 +55,8 @@ public class InstagramPost extends Post
 
     }
 
+    public void sendToFriend()
+    {
+        System.out.println("Instagram: \"Post sent to friend\"");
+    }
 }

@@ -11,14 +11,6 @@ public abstract class Post
         this.content = content;
         this.timestamp = timestamp;
     }
-    /*
-    public Post(String author, Date timestamp)
-    {
-        this.author = author;
-        this.timestamp = timestamp;
-        this.content = null;
-    }
-    */
 
     public String getAuthor()
     {
@@ -41,10 +33,14 @@ public abstract class Post
     {
         this.content = content;
     }
+
+    // I don't think we need setter for timestamp
+    /*
     public void setTimestamp(Date timestamp)
     {
         this.timestamp = timestamp;
     }
+    */
 
     public abstract void deletePost();
 
@@ -62,13 +58,18 @@ public abstract class Post
         {
             Post post = (Post) otherPost;
 
+            //return statement for the program where timestamp is always different
+            return this.author.equalsIgnoreCase(post.author) && this.content.equalsIgnoreCase(post.content);
+
+            //return statement for thr program where the time stamp can be the same
+            /*
             return this.author.equalsIgnoreCase(post.author) && this.content.equalsIgnoreCase(post.content)
                     && this.timestamp.equals(post.timestamp);
+                    */
         }
         else
         {
             return false;
         }
-
     }
 }

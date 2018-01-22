@@ -10,10 +10,20 @@ public class FacebookPost extends Post
         this.privacy = privacy;
     }
 
+    public Privacy getPrivacy()
+    {
+        return privacy;
+    }
+
+    public void setPrivacy(Privacy privacy)
+    {
+        this.privacy = privacy;
+    }
+
     @Override
     public String toString()
     {
-        return super.toString() + "\n\n* Post visibility: " + privacy;
+        return "\t\tFacebook\n" + super.toString() + "\n\n* Post visibility: " + privacy;
     }
 
     @Override
@@ -36,5 +46,10 @@ public class FacebookPost extends Post
     {
         System.out.println("Facebook post deleted");
 
+    }
+
+    public void addLocation()
+    {
+        System.out.println("Facebook: \"Location added to your post\"");
     }
 }
