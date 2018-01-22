@@ -15,7 +15,7 @@ public class TwitterPost extends Post
         return userName;
     }
 
-    public void setUserName(String uderName)
+    public void setUserName(String userName)
     {
         this.userName = userName;
     }

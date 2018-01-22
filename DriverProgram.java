@@ -4,84 +4,53 @@ public class DriverProgram
 {
     public static void main (String [] args)
     {
-        Date date;
         String author;
         String content;
         String response;
-        Privacy privacy = Privacy.PUBLIC;
-        boolean saveToCollection;
-        String userName;
         ArrayList <Post> posts = new ArrayList <Post> ();
-        Scanner scan = new Scanner (System.in);
+
         do
         {
-            date = new Date();
+            //Add New Post
             System.out.println("Would you like to post on the social media site? (Y/N)");
-            response = scan.nextLine();
-            if (response.equalsIgnoreCase("y")) {
+            response = Post.scan.nextLine();
+            if (response.equalsIgnoreCase("y"))
+            {
                 System.out.println("Name: ");
-                author = scan.nextLine();
+                author = Post.scan.nextLine();
                 System.out.println("Message content:");
-                content = scan.nextLine();
+                content = Post.scan.nextLine();
                 System.out.println("What site would you like to post on?" +
                         "\n1 for Facebook" +
                         "\n2 for Instagram" +
                         "\n3 for Twitter ");
-                int siteNumberAnswer = Integer.parseInt(scan.nextLine());
-                if (siteNumberAnswer == 1) {
-                    System.out.println("Choose visibility (by default it's Public):" +
-                            "\n1 for Public" +
-                            "\n2 for Friends" +
-                            "\n3 for Friend Except..." +
-                            "\n4 for Specific Friends" +
-                            "\n5 for Only Me");
-
-                    int privacyNumberAnswer = Integer.parseInt(scan.nextLine());
-                    if (privacyNumberAnswer == 1) {
-                        privacy = Privacy.PUBLIC;
-                    }
-                    if (privacyNumberAnswer == 2) {
-                        privacy = Privacy.FRIENDS;
-                    }
-                    if (privacyNumberAnswer == 3) {
-                        privacy = Privacy.FRIENDS_EXCEPT;
-                    }
-                    if (privacyNumberAnswer == 4) {
-                        privacy = Privacy.SPECIFIC_FRIENDS;
-                    }
-                    if (privacyNumberAnswer == 5) {
-                        privacy = Privacy.ONLY_ME;
-                    }
-                    posts.add(new FacebookPost(author, content, date, privacy));
-                }
-                if (siteNumberAnswer == 2) {
-                    System.out.println("Would you like to save this post to collection? (Y/N)");
-                    String collectionAnswer = scan.nextLine();
-                    if(collectionAnswer.equalsIgnoreCase("y"))
-                    {
-                        saveToCollection = true;
-                    }
-                    else
-                    {
-                        saveToCollection = false;
-                    }
-                    posts.add(new InstagramPost(author, content, date, saveToCollection));
-                }
-                if (siteNumberAnswer == 3)
+                int siteNumberAnswer = Integer.parseInt(Post.scan.nextLine());
+                switch (siteNumberAnswer)
                 {
-                    System.out.println("Please add Username that starts with '@'");
-                    userName = scan.nextLine();
-                    posts.add(new TwitterPost(author, content, date, userName));
+                    case 1:
+                        //Create Facebook Post
+                        makeNewFacebookPost(posts, author, content);
+                        break;
+                    case 2:
+                        //Create Instagram Post
+                        makeNewInstagramPost(posts, author, content);
+                        break;
+                    case 3:
+                        //Create Twitter Post
+                        makeNewTwitterPost(posts, author, content);
+                        break;
+                    default:
+                        //Default Post
+                        break;
                 }
-            }
+            }//"Would you like to post on the social media site? (Y/N)";
         }
         while(response.equalsIgnoreCase("y"));
 
-        for(Post p : posts)
-        {
-            System.out.println(p.toString() + "\n_______________\n");
-        }
+        //Print posts
+        displayPosts(posts);
 
+        //Interact with posts
         for(Post p : posts)
         {
             if(p instanceof TwitterPost)
@@ -98,14 +67,91 @@ public class DriverProgram
             }
         }
 
+        //Test deleting posts
         posts.get(0).deletePost();
         posts.remove(0);
 
+        //Print posts after changes
+        displayPosts(posts);
+
+        //Test post comparisons
+        System.out.println(posts.get(0).equals(posts.get(1)));
+    }//main()
+
+    //Display Posts
+    public static void displayPosts(ArrayList<Post> posts)
+    {
+        int count = 0;
         for(Post p : posts)
         {
-            System.out.println(p.toString() + "\n_______________\n");
+            System.out.println("Post #" + (++count) + p.toString() + "\n_______________\n");
         }
-
-        System.out.println(posts.get(0).equals(posts.get(1)));
     }
-}
+
+    //Retrieve Privacy
+    public static Privacy getPrivacy(int privacyNumberAnswer)
+    {
+        if (privacyNumberAnswer == 1)
+        {
+            return Privacy.PUBLIC;
+        }
+        else if (privacyNumberAnswer == 2)
+        {
+            return Privacy.FRIENDS;
+        }
+        else if (privacyNumberAnswer == 3)
+        {
+            return Privacy.FRIENDS_EXCEPT;
+        }
+        else if (privacyNumberAnswer == 4)
+        {
+            return Privacy.SPECIFIC_FRIENDS;
+        }
+        else
+        {//(privacyNumberAnswer == 5) 
+            return Privacy.ONLY_ME;
+        }
+    } //getPrivacy
+
+    public static void makeNewFacebookPost(ArrayList<Post> posts, String author,
+            String content)
+    {
+        //Create Facebook Post
+        System.out.println("Choose visibility (by default it's Public):" +
+                "\n1 for Public" +
+                "\n2 for Friends" +
+                "\n3 for Friend Except..." +
+                "\n4 for Specific Friends" +
+                "\n5 for Only Me");
+        int privacyNumberAnswer = Integer.parseInt(Post.scan.nextLine());
+        Privacy privacy = Privacy.PUBLIC;
+        privacy = getPrivacy(privacyNumberAnswer);
+
+        posts.add(new FacebookPost(author, content, new Date(), privacy));
+    }//makeNewFacebookPost()
+
+    public static void makeNewInstagramPost(ArrayList<Post> posts, String author,
+            String content)
+    {
+        //Create Instagram Post
+        System.out.println("Would you like to save this post to collection? (Y/N)");
+        String collectionAnswer = Post.scan.nextLine();
+        boolean saveToCollection = collectionAnswer.equalsIgnoreCase("y");
+        posts.add(new InstagramPost(author, content, new Date(), saveToCollection));
+    }//makeNewInstagramPost
+
+
+    public static void makeNewTwitterPost(ArrayList<Post> posts, String author,
+            String content)
+    {
+        System.out.println("Please add Username that starts with '@'");
+        String userName = Post.scan.nextLine();
+        posts.add(new TwitterPost(author, content, new Date(), userName));
+    }//makeNewTwitterPost
+}//Driver Program
+
+/**
+ * TODO:
+ *  - read post data from a text file (change to api later?)
+ *  - create post code, package in a module
+ */

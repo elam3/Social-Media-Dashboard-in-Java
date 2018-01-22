@@ -2,6 +2,7 @@ import java.util.*;
 
 public abstract class Post
 {
+    public static Scanner scan = new Scanner(System.in);
     private String author, content;
     private Date timestamp;
 
