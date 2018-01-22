@@ -1,16 +1,40 @@
-public class FacebookPost extends Post {
-    private int likeCount;
+import java.util.*;
 
-    public FacebookPost(String author, String timestamp, String content) {
-        super(author, timestamp, content);
-        this.likeCount = 0;
+public class FacebookPost extends Post
+{
+    public Privacy privacy;
+
+    public FacebookPost(String author, String content, Date timestamp, Privacy privacy)
+    {
+        super(author, content, timestamp);
+        this.privacy = privacy;
     }
 
-    //getter & setter
-    //equal
-    //toString
+    @Override
+    public String toString()
+    {
+        return super.toString() + "\n\n* Post visibility: " + privacy;
+    }
 
-    public void clickLikeButton() {
-        likeCount++;
+    @Override
+    public boolean equals(Object otherPost)
+    {
+        if (otherPost instanceof FacebookPost)
+        {
+            FacebookPost post = (FacebookPost) otherPost;
+
+            return super.equals(post) && this.privacy.equals(post.privacy);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public void deletePost()
+    {
+        System.out.println("Facebook post deleted");
+
     }
 }

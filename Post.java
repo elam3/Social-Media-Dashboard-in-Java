@@ -1,27 +1,74 @@
-public class Post {
-    private String author;      //
-    private String timestamp;   //YYYYMMDDHH:MM:SS
-    private String content;     //post content; i.e. message
-    
-    public Post(String author, String timestamp, String content) {
+import java.util.*;
+
+public abstract class Post
+{
+    private String author, content;
+    private Date timestamp;
+
+    public Post(String author, String content, Date timestamp)
+    {
+        this.author = author;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+    /*
+    public Post(String author, Date timestamp)
+    {
         this.author = author;
         this.timestamp = timestamp;
+        this.content = null;
+    }
+    */
+
+    public String getAuthor()
+    {
+        return author;
+    }
+    public String getContent()
+    {
+        return content;
+    }
+    public Date getTimestamp()
+    {
+        return timestamp;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
+    public void setContent(String content)
+    {
         this.content = content;
     }
-
-    public Post(String author, String timestamp) {
-        this.author = author;
+    public void setTimestamp(Date timestamp)
+    {
         this.timestamp = timestamp;
-        this.content = null;
     }
 
-    public Post() {
-        this.author = null;
-        this.timestamp = null;
-        this.content = null;
+    public abstract void deletePost();
+
+
+    @Override
+    public String toString()
+    {
+        return author + "\n" + timestamp + "\n\n\t///////////////\n\t" + content + "\n\t///////////////";
     }
 
-    //getter & setters
-    //equal
-    //toString
+    @Override
+    public boolean equals(Object otherPost)
+    {
+        if(otherPost instanceof Post)
+        {
+            Post post = (Post) otherPost;
+
+            return this.author.equalsIgnoreCase(post.author) && this.content.equalsIgnoreCase(post.content)
+                    && this.timestamp.equals(post.timestamp);
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }
