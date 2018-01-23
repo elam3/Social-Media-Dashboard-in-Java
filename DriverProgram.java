@@ -1,9 +1,18 @@
 import java.util.*;
 
+/**
+ * Authors: Tatiana K., Edison L.
+ *
+ * DriverProgram is a text-based interface that allows a user to
+ * create, remove, and print Post objects that resembles a post
+ * from social media networks like Facebook, Twitter, and
+ * Instagram.
+ */
 public class DriverProgram
 {
     public static void main (String [] args)
     {
+        //Hold all posts
         ArrayList <Post> posts = new ArrayList <Post> ();
         String menuSelect;
 
@@ -42,6 +51,7 @@ public class DriverProgram
         while(!menuSelect.equalsIgnoreCase("q"));
     }//main()
 
+    //Print main menu
     public static void displayMainMenu()
     {
         System.out.println("What would you like to do?");
@@ -54,12 +64,15 @@ public class DriverProgram
             + "[   q ] Quit.\n");
     }
 
+    //Compare two posts in the array list
+    //TODO: allow users to specify which two posts to compare
     public static void comparePosts(ArrayList<Post> posts)
     {
         //Test post comparisons
         System.out.println(posts.get(0).equals(posts.get(1)));
     }
 
+    //Invoke class-specific methods
     public static void interactWithPosts(ArrayList<Post> posts)
     {
         //Interact with posts
@@ -80,6 +93,7 @@ public class DriverProgram
         }
     }
 
+    //Remove a post from array list
     public static void deleteLocalPost(ArrayList<Post> posts)
     {
         //Test deleting posts
@@ -87,6 +101,7 @@ public class DriverProgram
         posts.remove(0);
     }
 
+    //Add a post to array list
     public static void addNewPost(ArrayList<Post> posts)
     {
         String author;
@@ -169,6 +184,7 @@ public class DriverProgram
         }
     } //getPrivacy
 
+    //Add a Facebook Post
     public static void makeNewFacebookPost(ArrayList<Post> posts, String author,
             String content)
     {
@@ -186,6 +202,7 @@ public class DriverProgram
         posts.add(new FacebookPost(author, content, new Date(), privacy));
     }//makeNewFacebookPost()
 
+    //Add an Instagram Post
     public static void makeNewInstagramPost(ArrayList<Post> posts, String author,
             String content)
     {
@@ -196,7 +213,7 @@ public class DriverProgram
         posts.add(new InstagramPost(author, content, new Date(), saveToCollection));
     }//makeNewInstagramPost
 
-
+    //Add a Twitter Post
     public static void makeNewTwitterPost(ArrayList<Post> posts, String author,
             String content)
     {
@@ -209,4 +226,5 @@ public class DriverProgram
 /**
  * TODO:
  *  - read post data from a text file (change to api later?)
+ *  - input validation
  */
