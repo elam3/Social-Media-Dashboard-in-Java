@@ -131,6 +131,12 @@ public class DriverProgram
     //Display Posts
     public static void printPosts(ArrayList<Post> posts)
     {
+	if (posts.size() == 0)
+	{
+		System.out.println("No posts yet. Start by adding new posts!");
+		return;
+	}
+
         int count = 0;
         for(Post p : posts)
         {
@@ -203,5 +209,4 @@ public class DriverProgram
 /**
  * TODO:
  *  - read post data from a text file (change to api later?)
- *  - create post code, package in a module
  */
