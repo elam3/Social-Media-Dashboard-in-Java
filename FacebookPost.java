@@ -4,6 +4,7 @@ public class FacebookPost extends Post
 {
     public Privacy privacy;
 
+
     public FacebookPost(String author, String content, Date timestamp, Privacy privacy)
     {
         super(author, content, timestamp);
@@ -52,4 +53,18 @@ public class FacebookPost extends Post
     {
         System.out.println("Facebook: \"Location added to your post\"");
     }
+
+    // M2 HOMEWORK STATIC
+    public static FacebookPost parseFacebookPost(TwitterPost tweet)
+    {
+        FacebookPost fbPost = new FacebookPost(
+            tweet.getAuthor(),
+            tweet.getContent(),
+            tweet.getTimestamp(),
+            Privacy.PUBLIC          //TwitterPosts are assumed to be public
+        );
+
+        return fbPost;
+    }
+
 }
