@@ -1,6 +1,6 @@
 import java.util.*;
 
-public abstract class Post
+public abstract class Post implements Comparable<Post>
 {
     public static Scanner scan = new Scanner(System.in);
     private String author, content;
@@ -71,6 +71,32 @@ public abstract class Post
         else
         {
             return false;
+        }
+    }
+    //First, will compare subclass name
+    //Second, will compare author of the post and sort in alphabetical order and based on capitalization
+    //Third, will compare timestamp of the post
+    @Override
+    public int compareTo(Post otherPost)
+    {
+        if(getClass().getSimpleName().equals(otherPost.getClass().getSimpleName()))
+        {
+            if (author.equals(otherPost.author))
+            {
+                return timestamp.compareTo(otherPost.timestamp);
+            }
+            else if (author.toLowerCase().toCharArray()[0] == otherPost.author.toLowerCase().toCharArray()[0])
+            {
+                return author.compareTo(otherPost.author);
+            }
+            else
+            {
+                return author.compareToIgnoreCase(otherPost.author);
+            }
+        }
+        else
+        {
+            return getClass().getSimpleName().compareTo(otherPost.getClass().getSimpleName());
         }
     }
 }

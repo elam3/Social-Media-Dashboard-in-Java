@@ -2,6 +2,7 @@ import java.util.*;
 
 public class FacebookPost extends Post
 {
+    // M2 HOMEWORK ENUM USE
     public Privacy privacy;
 
 
