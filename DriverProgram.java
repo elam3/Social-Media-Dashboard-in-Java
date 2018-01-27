@@ -143,7 +143,7 @@ public class DriverProgram
         }//"Would you like to post on the social media site? (Y/N)";
     }
 
-    //Display Posts
+    //Sort and Display Posts
     public static void printPosts(ArrayList<Post> posts)
     {
 	if (posts.size() == 0)
@@ -152,6 +152,7 @@ public class DriverProgram
 		return;
 	}
 
+	Collections.sort(posts);
         int count = 0;
         for(Post p : posts)
         {
