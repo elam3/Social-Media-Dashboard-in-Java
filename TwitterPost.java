@@ -1,10 +1,11 @@
+import java.time.*;
 import java.util.*;
 
 public class TwitterPost extends Post
 {
     private String userName;
 
-    public TwitterPost(String author, String content, Date timestamp, String userName)
+    public TwitterPost(String author, String content, LocalDate timestamp, String userName)
     {
         super(author, content, timestamp);
         this.userName = userName;
