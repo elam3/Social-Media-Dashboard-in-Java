@@ -1,10 +1,11 @@
+import java.time.*;
 import java.util.*;
 
 public class InstagramPost extends Post
 {
-    public boolean saveToCollection;
+    private boolean saveToCollection;
 
-    public InstagramPost(String author, String content, Date timestamp, boolean saveToCollection)
+    public InstagramPost(String author, String content, LocalDate timestamp, boolean saveToCollection)
     {
         super(author, content, timestamp);
         this.saveToCollection = saveToCollection;

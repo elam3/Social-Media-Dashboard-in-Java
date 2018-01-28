@@ -1,12 +1,11 @@
+import java.time.*;
 import java.util.*;
 
 public class FacebookPost extends Post
 {
-    // M2 HOMEWORK ENUM USE
-    public Privacy privacy;
+    private Privacy privacy;    // M2 HOMEWORK ENUM USE
 
-
-    public FacebookPost(String author, String content, Date timestamp, Privacy privacy)
+    public FacebookPost(String author, String content, LocalDate timestamp, Privacy privacy)
     {
         super(author, content, timestamp);
         this.privacy = privacy;

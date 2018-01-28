@@ -1,16 +1,19 @@
+import java.time.*;
 import java.util.*;
 
 public abstract class Post implements Comparable<Post>
 {
-    public static Scanner scan = new Scanner(System.in);
     private String author, content;
-    private Date timestamp;
+    private LocalDate timestamp;
+    private static int postsCount = 0; // M2 HOMEWORK STATIC
 
-    public Post(String author, String content, Date timestamp)
+    public Post(String author, String content, LocalDate timestamp)
     {
         this.author = author;
         this.content = content;
         this.timestamp = timestamp;
+        postsCount++;
+
     }
 
     public String getAuthor()
@@ -21,9 +24,13 @@ public abstract class Post implements Comparable<Post>
     {
         return content;
     }
-    public Date getTimestamp()
+    public LocalDate getTimestamp()
     {
         return timestamp;
+    }
+    public static int getPostsCount()
+    {
+        return postsCount;
     }
 
     public void setAuthor(String author)
@@ -33,6 +40,10 @@ public abstract class Post implements Comparable<Post>
     public void setContent(String content)
     {
         this.content = content;
+    }
+    public static void setPostsCount(int postsCount)
+    {
+        Post.postsCount = postsCount;
     }
 
     // I don't think we need setter for timestamp

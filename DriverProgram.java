@@ -1,3 +1,4 @@
+import java.time.*;
 import java.util.*;
 
 /**
@@ -10,6 +11,8 @@ import java.util.*;
  */
 public class DriverProgram
 {
+    public static Scanner scan = new Scanner(System.in);
+
     public static void main (String [] args)
     {
         //Hold all posts
@@ -20,7 +23,7 @@ public class DriverProgram
         {
             displayMainMenu();
 
-            menuSelect = Post.scan.nextLine();
+            menuSelect = scan.nextLine();
             if (menuSelect.equalsIgnoreCase("p"))
             {
                 //Print all posts
@@ -54,6 +57,7 @@ public class DriverProgram
     //Print main menu
     public static void displayMainMenu()
     {
+        System.out.println("We have " + Post.getPostsCount() + " post(s)");
         System.out.println("What would you like to do?");
         System.out.println(
               "[   p ] Print all posts.\n"
@@ -73,14 +77,33 @@ public class DriverProgram
     }
 
     //Invoke class-specific methods
+    //TODO: allow user to specify which post to interact with
     public static void interactWithPosts(ArrayList<Post> posts)
     {
+        int userResponse;
+        Post modifiedPost;
         //Interact with posts
         for(Post p : posts)
         {
             if(p instanceof TwitterPost)
             {
-                ((TwitterPost) p).follow();
+                System.out.println("What would you like to do?");
+                System.out.println(
+                "1 - Follow\n" +
+                "2 - Convert to Facebook post\n");
+
+                userResponse = Integer.parseInt(scan.nextLine());
+
+                if(userResponse == 1)
+                {
+                    ((TwitterPost) p).follow();
+                }
+                if(userResponse == 2)
+                {
+                    modifiedPost = FacebookPost.parseFacebookPost((TwitterPost) p);
+                    posts.remove(p);
+                    posts.add(modifiedPost);
+                }
             }
             if(p instanceof FacebookPost)
             {
@@ -99,6 +122,8 @@ public class DriverProgram
         //Test deleting posts
         posts.get(0).deletePost();
         posts.remove(0);
+        Post.setPostsCount(Post.getPostsCount()-1);
+
     }
 
     //Add a post to array list
@@ -110,18 +135,18 @@ public class DriverProgram
 
         //Add New Post
         System.out.println("Would you like to post on the social media site? (Y/N)");
-        response = Post.scan.nextLine();
+        response = scan.nextLine();
         if (response.equalsIgnoreCase("y"))
         {
             System.out.println("Name: ");
-            author = Post.scan.nextLine();
+            author = scan.nextLine();
             System.out.println("Message content:");
-            content = Post.scan.nextLine();
+            content = scan.nextLine();
             System.out.println("What site would you like to post on?" +
                     "\n1 for Facebook" +
                     "\n2 for Instagram" +
                     "\n3 for Twitter ");
-            int siteNumberAnswer = Integer.parseInt(Post.scan.nextLine());
+            int siteNumberAnswer = Integer.parseInt(scan.nextLine());
             switch (siteNumberAnswer)
             {
                 case 1:
@@ -146,13 +171,13 @@ public class DriverProgram
     //Sort and Display Posts
     public static void printPosts(ArrayList<Post> posts)
     {
-	if (posts.size() == 0)
-	{
-		System.out.println("No posts yet. Start by adding new posts!");
-		return;
-	}
+	    if (posts.size() == 0)
+	    {
+		    System.out.println("No posts yet. Start by adding new posts!");
+		    return;
+	    }
 
-	Collections.sort(posts);
+	    Collections.sort(posts);
         int count = 0;
         for(Post p : posts)
         {
@@ -196,11 +221,12 @@ public class DriverProgram
                 "\n3 for Friend Except..." +
                 "\n4 for Specific Friends" +
                 "\n5 for Only Me");
-        int privacyNumberAnswer = Integer.parseInt(Post.scan.nextLine());
-        Privacy privacy = Privacy.PUBLIC;
+
+        int privacyNumberAnswer = Integer.parseInt(scan.nextLine());
+        Privacy privacy;
         privacy = getPrivacy(privacyNumberAnswer);
 
-        posts.add(new FacebookPost(author, content, new Date(), privacy));
+        posts.add(new FacebookPost(author, content, LocalDate.now(), privacy));
     }//makeNewFacebookPost()
 
     //Add an Instagram Post
@@ -209,9 +235,9 @@ public class DriverProgram
     {
         //Create Instagram Post
         System.out.println("Would you like to save this post to collection? (Y/N)");
-        String collectionAnswer = Post.scan.nextLine();
+        String collectionAnswer = scan.nextLine();
         boolean saveToCollection = collectionAnswer.equalsIgnoreCase("y");
-        posts.add(new InstagramPost(author, content, new Date(), saveToCollection));
+        posts.add(new InstagramPost(author, content, LocalDate.now(), saveToCollection));
     }//makeNewInstagramPost
 
     //Add a Twitter Post
@@ -219,8 +245,8 @@ public class DriverProgram
             String content)
     {
         System.out.println("Please add Username that starts with '@'");
-        String userName = Post.scan.nextLine();
-        posts.add(new TwitterPost(author, content, new Date(), userName));
+        String userName = scan.nextLine();
+        posts.add(new TwitterPost(author, content, LocalDate.now(), userName));
     }//makeNewTwitterPost
 }//Driver Program
 
