@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class DriverProgram
 {
-    public static Scanner scan = new Scanner(System.in);
+    private static Scanner scan = new Scanner(System.in);
 
     public static void main (String [] args)
     {

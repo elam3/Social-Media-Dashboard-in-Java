@@ -84,19 +84,24 @@ public abstract class Post implements Comparable<Post>
             return false;
         }
     }
-    //First, will compare subclass name
-    //Second, will compare author of the post and sort in alphabetical order and based on capitalization
-    //Third, will compare timestamp of the post
+
+    //First,    will compare subclass name
+    //Second,   will compare author of the post and sort in alphabetical order and based
+    //          on capitalization
+    //Third,    will compare timestamp of the post
     @Override
     public int compareTo(Post otherPost)
     {
-        if(getClass().getSimpleName().equals(otherPost.getClass().getSimpleName()))
+		String myClassName      = getClass().getSimpleName(),
+               otherClassName   = otherPost.getClass().getSimpleName();
+
+        if (myClassName.equals(otherClassName))
         {
             if (author.equals(otherPost.author))
             {
                 return timestamp.compareTo(otherPost.timestamp);
             }
-            else if (author.toLowerCase().toCharArray()[0] == otherPost.author.toLowerCase().toCharArray()[0])
+            else if (author.toLowerCase().charAt(0) == otherPost.author.toLowerCase().charAt(0))
             {
                 return author.compareTo(otherPost.author);
             }
@@ -107,7 +112,7 @@ public abstract class Post implements Comparable<Post>
         }
         else
         {
-            return getClass().getSimpleName().compareTo(otherPost.getClass().getSimpleName());
+            return myClassName.compareTo(otherClassName);
         }
-    }
-}
+    }//compareTo()
+}//class Post
