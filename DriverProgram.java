@@ -31,8 +31,9 @@ public class DriverProgram
             }
             else if (menuSelect.equalsIgnoreCase("a"))
             {
+                // M3 USING FACTORY
                 //Add New Post
-                addNewPost(posts);
+                posts.add(PostFactory.newPost());
             }
             else if (menuSelect.equalsIgnoreCase("i"))
             {
@@ -57,7 +58,7 @@ public class DriverProgram
     //Print main menu
     public static void displayMainMenu()
     {
-        System.out.println("We have " + Post.getPostsCount() + " post(s)");
+        System.out.println("Total: " + Post.getPostsCount() + " post(s)");
         System.out.println("What would you like to do?");
         System.out.println(
               "[   p ] Print all posts.\n"
@@ -126,48 +127,6 @@ public class DriverProgram
 
     }
 
-    //Add a post to array list
-    public static void addNewPost(ArrayList<Post> posts)
-    {
-        String author;
-        String content;
-        String response;
-
-        //Add New Post
-        System.out.println("Would you like to post on the social media site? (Y/N)");
-        response = scan.nextLine();
-        if (response.equalsIgnoreCase("y"))
-        {
-            System.out.println("Name: ");
-            author = scan.nextLine();
-            System.out.println("Message content:");
-            content = scan.nextLine();
-            System.out.println("What site would you like to post on?" +
-                    "\n1 for Facebook" +
-                    "\n2 for Instagram" +
-                    "\n3 for Twitter ");
-            int siteNumberAnswer = Integer.parseInt(scan.nextLine());
-            switch (siteNumberAnswer)
-            {
-                case 1:
-                    //Create Facebook Post
-                    makeNewFacebookPost(posts, author, content);
-                    break;
-                case 2:
-                    //Create Instagram Post
-                    makeNewInstagramPost(posts, author, content);
-                    break;
-                case 3:
-                    //Create Twitter Post
-                    makeNewTwitterPost(posts, author, content);
-                    break;
-                default:
-                    //Default Post
-                    break;
-            }
-        }//"Would you like to post on the social media site? (Y/N)";
-    }
-
     //Sort and Display Posts
     public static void printPosts(ArrayList<Post> posts)
     {
@@ -184,70 +143,6 @@ public class DriverProgram
             System.out.println("Post #" + (++count) + p.toString() + "\n_______________\n");
         }
     }
-
-    //Retrieve Privacy
-    public static Privacy getPrivacy(int privacyNumberAnswer)
-    {
-        if (privacyNumberAnswer == 1)
-        {
-            return Privacy.PUBLIC;
-        }
-        else if (privacyNumberAnswer == 2)
-        {
-            return Privacy.FRIENDS;
-        }
-        else if (privacyNumberAnswer == 3)
-        {
-            return Privacy.FRIENDS_EXCEPT;
-        }
-        else if (privacyNumberAnswer == 4)
-        {
-            return Privacy.SPECIFIC_FRIENDS;
-        }
-        else
-        {//(privacyNumberAnswer == 5) 
-            return Privacy.ONLY_ME;
-        }
-    } //getPrivacy
-
-    //Add a Facebook Post
-    public static void makeNewFacebookPost(ArrayList<Post> posts, String author,
-            String content)
-    {
-        //Create Facebook Post
-        System.out.println("Choose visibility (by default it's Public):" +
-                "\n1 for Public" +
-                "\n2 for Friends" +
-                "\n3 for Friend Except..." +
-                "\n4 for Specific Friends" +
-                "\n5 for Only Me");
-
-        int privacyNumberAnswer = Integer.parseInt(scan.nextLine());
-        Privacy privacy;
-        privacy = getPrivacy(privacyNumberAnswer);
-
-        posts.add(new FacebookPost(author, content, LocalDate.now(), privacy));
-    }//makeNewFacebookPost()
-
-    //Add an Instagram Post
-    public static void makeNewInstagramPost(ArrayList<Post> posts, String author,
-            String content)
-    {
-        //Create Instagram Post
-        System.out.println("Would you like to save this post to collection? (Y/N)");
-        String collectionAnswer = scan.nextLine();
-        boolean saveToCollection = collectionAnswer.equalsIgnoreCase("y");
-        posts.add(new InstagramPost(author, content, LocalDate.now(), saveToCollection));
-    }//makeNewInstagramPost
-
-    //Add a Twitter Post
-    public static void makeNewTwitterPost(ArrayList<Post> posts, String author,
-            String content)
-    {
-        System.out.println("Please add Username that starts with '@'");
-        String userName = scan.nextLine();
-        posts.add(new TwitterPost(author, content, LocalDate.now(), userName));
-    }//makeNewTwitterPost
 }//Driver Program
 
 /**
