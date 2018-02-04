@@ -90,7 +90,7 @@ public class PostFactory {
         Privacy privacy;
         privacy = getPrivacy(privacyNumberAnswer);
 
-        return new FacebookPost(author, content, LocalDate.now(), privacy);
+        return new FacebookPost(author, content, LocalDate.now(), privacy, FacebookPost.DEFAULT_SHARER);
     }//newFacebookPost()
 
     //Create Instagram Post

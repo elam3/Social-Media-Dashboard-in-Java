@@ -40,6 +40,11 @@ public class DriverProgram
                 //Interact with posts
                 interactWithPosts(posts);
             }
+            else if (menuSelect.equalsIgnoreCase("s"))
+            {
+                //share posts
+                sharePost(posts);
+            }
             else if (menuSelect.equalsIgnoreCase("d"))
             {
                 //Delete a post
@@ -64,6 +69,7 @@ public class DriverProgram
               "[   p ] Print all posts.\n"
             + "[   a ] Add a new post.\n"
             + "[   i ] Interact with posts.\n"
+            + "[   s ] Share posts.\n"
             + "[   d ] Delete a post.\n"
             + "[ cmp ] Compare two posts.\n"
             + "[   q ] Quit.\n");
@@ -104,6 +110,7 @@ public class DriverProgram
                     modifiedPost = FacebookPost.parseFacebookPost((TwitterPost) p);
                     posts.remove(p);
                     posts.add(modifiedPost);
+                    Post.removedPostCount();
                 }
             }
             if(p instanceof FacebookPost)
@@ -117,14 +124,43 @@ public class DriverProgram
         }
     }
 
+    //Share posts
+    public static void sharePost(ArrayList<Post> posts)
+    {
+        for(Post p: posts)
+        {
+            if (p instanceof FacebookPost)
+            {
+                int shareRespond;
+                System.out.println("How would you like to share?");
+                System.out.println("" +
+                        "1 - Share with all friends\n" +
+                        "2 - Send to one friend");
+                shareRespond = Integer.parseInt(scan.nextLine());
+                if(shareRespond == 1)
+                {
+                    p.setSharer(new ShareWithFriends());
+                }
+                else if (shareRespond == 2)
+                {
+                    p.setSharer(new SendToFriend());
+                }
+                else
+                {
+                    throw new IllegalArgumentException();
+                }
+            }
+            p.share();      // M3 USING STRATEGY
+        }
+    }
+
     //Remove a post from array list
     public static void deleteLocalPost(ArrayList<Post> posts)
     {
         //Test deleting posts
         posts.get(0).deletePost();
         posts.remove(0);
-        Post.setPostsCount(Post.getPostsCount()-1);
-
+        Post.removedPostCount();
     }
 
     //Sort and Display Posts

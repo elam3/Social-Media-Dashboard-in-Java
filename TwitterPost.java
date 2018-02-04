@@ -7,7 +7,7 @@ public class TwitterPost extends Post
 
     public TwitterPost(String author, String content, LocalDate timestamp, String userName)
     {
-        super(author, content, timestamp);
+        super(author, content, timestamp, new ShareWithFriends());
         this.userName = userName;
     }
 

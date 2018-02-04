@@ -1,18 +1,20 @@
 import java.time.*;
-import java.util.*;
 
 public abstract class Post implements Comparable<Post>
 {
     private String author, content;
     private LocalDate timestamp;
     private static int postsCount = 0; // M2 HOMEWORK STATIC
+    private Sharer sharer;
 
-    public Post(String author, String content, LocalDate timestamp)
+
+    public Post(String author, String content, LocalDate timestamp, Sharer sharer)
     {
         this.author = author;
         this.content = content;
         this.timestamp = timestamp;
         postsCount++;
+        this.sharer = sharer;
 
     }
 
@@ -41,9 +43,10 @@ public abstract class Post implements Comparable<Post>
     {
         this.content = content;
     }
-    public static void setPostsCount(int postsCount)
+
+    public void setSharer(Sharer sharer)
     {
-        Post.postsCount = postsCount;
+        this.sharer = sharer;
     }
 
     // I don't think we need setter for timestamp
@@ -55,6 +58,11 @@ public abstract class Post implements Comparable<Post>
     */
 
     public abstract void deletePost();
+
+    public void share()
+    {
+        sharer.share();
+    }
 
 
     @Override
@@ -105,14 +113,14 @@ public abstract class Post implements Comparable<Post>
             {
                 return author.compareTo(otherPost.author);
             }
-            else
-            {
-                return author.compareToIgnoreCase(otherPost.author);
-            }
+            return author.compareToIgnoreCase(otherPost.author);
         }
-        else
-        {
             return myClassName.compareTo(otherClassName);
-        }
     }//compareTo()
+
+    // Updating post count when the post is removed
+    public static int removedPostCount()
+    {
+        return postsCount = postsCount - 1;
+    }// removedPost()
 }//class Post
