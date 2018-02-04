@@ -4,6 +4,7 @@ import java.util.*;
 public class TwitterPost extends Post
 {
     private String userName;
+    protected final static String DEFAULT_USER_NAME = "@user";
 
     public TwitterPost(String author, String content, LocalDate timestamp, String userName)
     {
