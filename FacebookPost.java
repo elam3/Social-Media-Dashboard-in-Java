@@ -4,10 +4,12 @@ import java.util.*;
 public class FacebookPost extends Post
 {
     private Privacy privacy;    // M2 HOMEWORK ENUM USE
+    protected static final Sharer DEFAULT_SHARER = new ShareWithFriends();
+    protected static final Privacy DEFAULT_PRIVACY = Privacy.PUBLIC;
 
-    public FacebookPost(String author, String content, LocalDate timestamp, Privacy privacy)
+    public FacebookPost(String author, String content, LocalDate timestamp, Privacy privacy, Sharer sharer)
     {
-        super(author, content, timestamp);
+        super(author, content, timestamp, sharer);
         this.privacy = privacy;
     }
 
@@ -61,7 +63,8 @@ public class FacebookPost extends Post
             tweet.getAuthor(),
             tweet.getContent(),
             tweet.getTimestamp(),
-            Privacy.PUBLIC          //TwitterPosts are assumed to be public
+            DEFAULT_PRIVACY,          //TwitterPosts are assumed to be public
+            DEFAULT_SHARER           //TwitterPosts are shared with followers
         );
 
         return fbPost;
