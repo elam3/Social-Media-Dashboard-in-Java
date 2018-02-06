@@ -7,7 +7,7 @@ public class InstagramPost extends Post
 
     public InstagramPost(String author, String content, LocalDate timestamp, boolean saveToCollection)
     {
-        super(author, content, timestamp);
+        super(author, content, timestamp, new SendToFriend());
         this.saveToCollection = saveToCollection;
     }
 
