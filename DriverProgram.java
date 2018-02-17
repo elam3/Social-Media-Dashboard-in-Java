@@ -29,6 +29,11 @@ public class DriverProgram
                 //Print all posts
                 printPosts(posts);
             }
+            else if (menuSelect.equalsIgnoreCase("c"))
+            {
+                //Create an account
+                createAccount();
+            }
             else if (menuSelect.equalsIgnoreCase("a"))
             {
                 //Add New Post
@@ -66,6 +71,7 @@ public class DriverProgram
         System.out.println("What would you like to do?");
         System.out.println(
               "[   p ] Print all posts.\n"
+            + "[   c ] Create an account\n"
             + "[   a ] Add a new post.\n"
             + "[   i ] Interact with posts.\n"
             + "[   s ] Share posts.\n"
@@ -255,6 +261,59 @@ public class DriverProgram
         {
             System.out.println("Post #" + (++count) + p.toString() + "\n_______________\n");
         }
+    }
+
+    //Create an account
+    public static void createAccount()
+    {
+        String name, picture, phoneNumber, email, password;
+        String userResponse;
+        System.out.println("Enter name");
+        name = scan.nextLine();
+        System.out.println("Enter email");
+        email = scan.nextLine();
+        System.out.println("Enter password");
+        password = scan.nextLine();
+        System.out.println("Would you like to add phone number? (Enter to skip or type something)");
+        phoneNumber = scan.nextLine();
+        System.out.println("Would you like to add picture? (Enter to skip or type something)");
+        picture = scan.nextLine();
+        if(phoneNumber.isEmpty() && picture.isEmpty())
+        {
+            //M3 USING BUILDER
+            System.out.println(
+                    new Account.AccountBuilder(name, email, password)
+                    .build()
+            );
+        }
+        else if(phoneNumber.isEmpty() && !picture.isEmpty())
+        {
+            System.out.println(
+                    new Account.AccountBuilder(name, email, password)
+                    .picture(picture)
+                    .build()
+            );
+        }
+        else if(!phoneNumber.isEmpty() && picture.isEmpty())
+        {
+            System.out.println(
+                    new Account.AccountBuilder(name, email, password)
+                    .phoneNumber(phoneNumber)
+                    .build()
+            );
+        }
+        else
+        {
+            System.out.println(
+                    new Account.AccountBuilder(name, email, password)
+                    .picture(picture)
+                    .phoneNumber(phoneNumber)
+                    .build()
+            );
+        }
+
+
+
     }
 }//Driver Program
 

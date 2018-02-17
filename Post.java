@@ -1,4 +1,5 @@
 import java.time.*;
+import java.util.Comparator;
 
 public abstract class Post implements Comparable<Post>
 {
@@ -7,6 +8,22 @@ public abstract class Post implements Comparable<Post>
     private static int postsCount = 0; // M2 HOMEWORK STATIC
     private Sharer sharer;
 
+    private static class PostAuthorComparator implements Comparator<Post>
+    {
+        @Override
+        public int compare(Post p1, Post p2)
+        {
+            return p1.author.compareTo(p2.author);
+        }
+    }
+    private static class PostTimeStampComparator implements Comparator<Post>
+    {
+        @Override
+        public int compare(Post p1, Post p2)
+        {
+            return p1.timestamp.compareTo(p2.timestamp);
+        }
+    }
 
     public Post(String author, String content, LocalDate timestamp, Sharer sharer)
     {
@@ -17,6 +34,7 @@ public abstract class Post implements Comparable<Post>
         this.sharer = sharer;
 
     }
+
 
     public String getAuthor()
     {
