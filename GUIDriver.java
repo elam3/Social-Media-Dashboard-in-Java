@@ -50,27 +50,12 @@ public class GUIDriver extends Application
         tableView.setSpacing(50);
         tableViewWrapper.setCenter(tableView);
 
-        //cell
-        VBox cellView = new VBox();
-        cellView.getStyleClass().add("cellView");
-        cellView.setPrefWidth(500);
-        tableView.getChildren().add(cellView);
-        //
-        ImageView fbIcon = new ImageView(new Image("assets/fb.png"));
-        cellView.getChildren().add(fbIcon);
-        //
-        Label username = new Label("Username");
-        cellView.getChildren().add(username);
-        //
-        Label timestamp = new Label("2018-01-31 12:31:00 PST");
-        cellView.getChildren().add(timestamp);
-        //
-        Label msg = new Label("This is the post content message.");
-        cellView.getChildren().add(msg);
-        //
-        Button like = new Button("Like");
-        cellView.getChildren().add(like);
+        //Add table cells
+        //TODO pass in Posts to CellView constructor
+        for (int i=0; i<10; i++)
+            tableView.getChildren().add(new CellView().get());
 
+        
         //Right Side Pane
         //TODO: Maybe add controls to create posts here?
         Pane pane2 = new FlowPane();
