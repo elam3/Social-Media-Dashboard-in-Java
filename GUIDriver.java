@@ -37,26 +37,18 @@ public class GUIDriver extends Application
         pane1.setPrefSize(600,800);
         hbox.getChildren().add(pane1);
 
-        BorderPane tableViewWrapper = new BorderPane();
-          ScrollPane tableViewSP = new ScrollPane();
+        ScrollPane tableViewSP = new ScrollPane();
+          tableViewSP.setPrefWidth(600);
+          tableViewSP.prefHeightProperty().bind(pane1.heightProperty());
             VBox tableView = new VBox();
-              tableViewWrapper.setPrefWidth(600);
-              tableViewWrapper.setPadding(new Insets(20,50,20,50));
-              BorderPane.setMargin(
-                  tableViewWrapper,
-                  new Insets(50,50,50,50)
-              );
-              BorderPane.setAlignment(tableViewWrapper, Pos.TOP_CENTER);
               tableView.getStyleClass().add("tableView");
-              tableView.prefWidthProperty().bind(pane1.widthProperty());
-              tableView.setSpacing(50);
+              tableView.setSpacing(20);
             tableViewSP.setContent(tableView);
-          tableViewWrapper.setCenter(tableViewSP);
-        pane1.getChildren().add(tableViewWrapper);
+        pane1.getChildren().add(tableViewSP);
 
         //Add table cells
         //TODO pass in Posts to CellView constructor
-        for (int i=0; i<10; i++)
+        for (int i=0; i<2; i++)
             tableView.getChildren().add(new CellView().getParent());
 
         

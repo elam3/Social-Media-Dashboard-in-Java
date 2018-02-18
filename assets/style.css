@@ -1,9 +1,11 @@
 .pane1 {
+    /*
     -fx-background-color: blue;
     -fx-border-radius: 15;
     -fx-border-style: solid;
     -fx-border-width: 5;
     -fx-border-color: red;
+    */
 }
 
 .pane2 {
@@ -12,13 +14,10 @@
 
 .tableView {
     -fx-background-color: gainsboro;
-    -fx-border-radius: 15;
-    -fx-border-style: solid;
-    -fx-border-width: 5;
-    -fx-border-color: white;
-    -fx-padding: 10;
 }
 
 .cellView {
     -fx-padding: 10;
+    -fx-background-color: white;
+    -fx-border-color: black;
 }

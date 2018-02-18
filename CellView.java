@@ -13,11 +13,11 @@ public class CellView {
     private Button      like;
 
     //TODO: pass in a Post object?
-    //TODO: fix spacing for labels etc.
     public CellView() {
         cellView = new VBox();
         cellView.getStyleClass().add("cellView");
-        cellView.setPrefWidth(500);
+        cellView.setSpacing(10);
+        cellView.setPrefWidth(580);
 
         //TODO: separate what varies?
         logoImageView = new ImageView(new Image("assets/fb.png"));
