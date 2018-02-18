@@ -36,5 +36,5 @@ public class CellView {
         cellView.getChildren().add(like);
     }
 
-    public Parent get() { return cellView; }
+    public Parent getParent() { return cellView; }
 }
