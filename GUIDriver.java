@@ -31,28 +31,22 @@ public class GUIDriver extends Application
         hbox.getStyleClass().add("hbox");
         root.getChildren().add(hbox);
 
-        // Left Side Pane
+        // Left Side Pane : Display Posts Here
         Pane pane1 = new FlowPane();
         pane1.getStyleClass().add("pane1");
         pane1.setPrefSize(600,800);
         hbox.getChildren().add(pane1);
 
-        ScrollPane tableViewSP = new ScrollPane();
-          tableViewSP.setPrefWidth(600);
-          tableViewSP.prefHeightProperty().bind(pane1.heightProperty());
-            VBox tableView = new VBox();
-              tableView.getStyleClass().add("tableView");
-              tableView.setSpacing(20);
-            tableViewSP.setContent(tableView);
-        pane1.getChildren().add(tableViewSP);
+        // This makes the table of cells hostings Post objects
+        GUIView tableView = new GUIView(pane1);
 
         //Add table cells
         //TODO pass in Posts to CellView constructor
-        for (int i=0; i<2; i++)
-            tableView.getChildren().add(new CellView().getParent());
+        for (int i=0; i<100; i++)
+            tableView.add(new CellView());
 
         
-        //Right Side Pane
+        //Right Side Pane : Controller Panel Here
         //TODO: Maybe add controls to create posts here?
         Pane pane2 = new FlowPane();
         pane2.getStyleClass().add("pane2");
