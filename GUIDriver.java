@@ -20,44 +20,30 @@ import javafx.geometry.*;
 public class GUIDriver extends Application
 {
     private static Scanner scan = new Scanner(System.in);
+    private GUIView tableView;
+
+    public GUIDriver()
+    {
+        // This makes the table of cells hostings Post objects
+        tableView = new GUIView();
+        //Add table cells
+        //TODO pass in Posts to CellView constructor
+        for (int i=0; i<100; i++) {
+            tableView.add(new CellView());
+        }
+    }
 
     @Override
     public void start(Stage primaryStage)
     {
-        Group root = new Group();
-        root.getStyleClass().add("root");
+        GUIDriver controller = new GUIDriver();
 
-        HBox hbox = new HBox();
-        hbox.getStyleClass().add("hbox");
-        root.getChildren().add(hbox);
-
-        // Left Side Pane : Display Posts Here
-        Pane pane1 = new FlowPane();
-        pane1.getStyleClass().add("pane1");
-        pane1.setPrefSize(600,800);
-        hbox.getChildren().add(pane1);
-
-        // This makes the table of cells hostings Post objects
-        GUIView tableView = new GUIView(pane1);
-
-        //Add table cells
-        //TODO pass in Posts to CellView constructor
-        for (int i=0; i<100; i++)
-            tableView.add(new CellView());
-
-        
-        //Right Side Pane : Controller Panel Here
-        //TODO: Maybe add controls to create posts here?
-        Pane pane2 = new FlowPane();
-        pane2.getStyleClass().add("pane2");
-        pane2.setPrefSize(600,800);
-        hbox.getChildren().add(pane2);
-
-        Scene scene = new Scene(root, 1200, 800);
+        Scene scene = new Scene(controller.tableView.getParent(), 1200, 800);
         scene.getStylesheets().add("assets/style.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Social Media");
         primaryStage.show();
+
     }
 
     public static void main (String [] args)
@@ -68,11 +54,9 @@ public class GUIDriver extends Application
         //Hold all posts
         ArrayList <Post> posts = new ArrayList <Post> ();
         String menuSelect;
-
         do
         {
             displayMainMenu();
-
             menuSelect = scan.nextLine();
             if (menuSelect.equalsIgnoreCase("p"))
             {
@@ -104,7 +88,6 @@ public class GUIDriver extends Application
                 //Compare two posts
                 comparePosts(posts);
             }
-
         }
         while(!menuSelect.equalsIgnoreCase("q"));
         */
@@ -116,13 +99,13 @@ public class GUIDriver extends Application
         System.out.println("Total: " + Post.getPostsCount() + " post(s)");
         System.out.println("What would you like to do?");
         System.out.println(
-              "[   p ] Print all posts.\n"
-            + "[   a ] Add a new post.\n"
-            + "[   i ] Interact with posts.\n"
-            + "[   s ] Share posts.\n"
-            + "[   d ] Delete a post.\n"
-            + "[ cmp ] Compare two posts.\n"
-            + "[   q ] Quit.\n");
+                "[   p ] Print all posts.\n"
+                        + "[   a ] Add a new post.\n"
+                        + "[   i ] Interact with posts.\n"
+                        + "[   s ] Share posts.\n"
+                        + "[   d ] Delete a post.\n"
+                        + "[ cmp ] Compare two posts.\n"
+                        + "[   q ] Quit.\n");
     }
 
     public static void addPost(ArrayList<Post> posts) {
@@ -224,8 +207,8 @@ public class GUIDriver extends Application
             {
                 System.out.println("What would you like to do?");
                 System.out.println(
-                "1 - Follow\n" +
-                "2 - Convert to Facebook post\n");
+                        "1 - Follow\n" +
+                                "2 - Convert to Facebook post\n");
 
                 userResponse = Integer.parseInt(scan.nextLine());
 
@@ -294,13 +277,13 @@ public class GUIDriver extends Application
     //Sort and Display Posts
     public static void printPosts(ArrayList<Post> posts)
     {
-	    if (posts.size() == 0)
-	    {
-		    System.out.println("No posts yet. Start by adding new posts!");
-		    return;
-	    }
+        if (posts.size() == 0)
+        {
+            System.out.println("No posts yet. Start by adding new posts!");
+            return;
+        }
 
-	    Collections.sort(posts);
+        Collections.sort(posts);
         int count = 0;
         for(Post p : posts)
         {
@@ -314,3 +297,4 @@ public class GUIDriver extends Application
  *  - read post data from a text file (change to api later?)
  *  - input validation
  */
+
