@@ -1,8 +1,8 @@
-import java.awt.event.ActionEvent;
 import java.util.*;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
+import javafx.event.ActionEvent;
 
 /**
  * Authors: Tatiana K., Edison L.
@@ -15,7 +15,6 @@ import javafx.scene.*;
 public class GUIDriver extends Application
 {
     private static Scanner scan = new Scanner(System.in);
-    // This makes the table of cells hostings Post objects
     private GUIView tableView;
     private PostsCollection posts;
     private ActionEvent event;
@@ -31,7 +30,7 @@ public class GUIDriver extends Application
             tableView.add(new CellView());
         }
         */
-        //tableView.setPostAction(this::post);
+        tableView.setPostAction(this::post);
     }
 
     @Override
@@ -39,7 +38,12 @@ public class GUIDriver extends Application
     {
         GUIDriver controller = new GUIDriver();
 
-        Scene scene = new Scene(controller.tableView.getParent(), 1200, 800);
+        Scene scene = new Scene(
+            controller.tableView.getParent(),
+            1200,
+            800
+        );
+
         scene.getStylesheets().add("assets/style.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Social Media");
@@ -106,7 +110,10 @@ public class GUIDriver extends Application
 
         //TODO: add properties to CellView
         //tableView.add(new CellView());
-        posts.addPost(name, content, siteNumber, privacy, saveToCollection, userName);
+        posts.addPost(name, content, siteNumber, privacy,
+                saveToCollection, userName);
+
+        this.tableView.show(posts.getPosts());
     }
 
     //Print main menu

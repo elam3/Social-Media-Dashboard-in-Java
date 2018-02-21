@@ -36,5 +36,31 @@ public class CellView {
         cellView.getChildren().add(like);
     }
 
+    public CellView(Post post) {
+        cellView = new VBox();
+        cellView.getStyleClass().add("cellView");
+        cellView.setSpacing(10);
+        cellView.setPrefWidth(580);
+
+        //TODO: separate what varies?
+        logoImageView = new ImageView(new Image("assets/fb.png"));
+        cellView.getChildren().add(logoImageView);
+        //
+        String postUsername = post.getAuthor();
+        username = new Label(postUsername);
+        cellView.getChildren().add(username);
+        //
+        String postTimestamp = post.getTimestamp().toString();
+        timestamp = new Label(postTimestamp);
+        cellView.getChildren().add(timestamp);
+        //
+        String postMsg = post.getContent();
+        msg = new Label(postMsg);
+        cellView.getChildren().add(msg);
+        //
+        like = new Button("Like");
+        cellView.getChildren().add(like);
+    }
+
     public Parent getParent() { return cellView; }
 }
