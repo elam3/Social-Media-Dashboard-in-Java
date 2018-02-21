@@ -4,7 +4,7 @@ import java.util.Comparator;
 public abstract class Post implements Comparable<Post>
 {
     private String author, content;
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
     private static int postsCount = 0; // M2 HOMEWORK STATIC
     private Sharer sharer;
 
@@ -25,7 +25,7 @@ public abstract class Post implements Comparable<Post>
         }
     }
 
-    public Post(String author, String content, LocalDate timestamp, Sharer sharer)
+    public Post(String author, String content, LocalDateTime timestamp, Sharer sharer)
     {
         this.author = author;
         this.content = content;
@@ -44,7 +44,7 @@ public abstract class Post implements Comparable<Post>
     {
         return content;
     }
-    public LocalDate getTimestamp()
+    public LocalDateTime getTimestamp()
     {
         return timestamp;
     }
