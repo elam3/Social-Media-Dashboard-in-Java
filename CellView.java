@@ -11,30 +11,7 @@ public class CellView {
                         timestamp,
                         msg;
     private Button      like;
-
-    //TODO: pass in a Post object?
-    public CellView() {
-        cellView = new VBox();
-        cellView.getStyleClass().add("cellView");
-        cellView.setSpacing(10);
-        cellView.setPrefWidth(580);
-
-        //TODO: separate what varies?
-        logoImageView = new ImageView(new Image("assets/fb.png"));
-        cellView.getChildren().add(logoImageView);
-        //
-        username = new Label("Username");
-        cellView.getChildren().add(username);
-        //
-        timestamp = new Label("2018-01-31 12:31:00 PST");
-        cellView.getChildren().add(timestamp);
-        //
-        msg = new Label("This is the post content message.");
-        cellView.getChildren().add(msg);
-        //
-        like = new Button("Like");
-        cellView.getChildren().add(like);
-    }
+    private static final String DEFAULT_IMG_PATH = "default.png";
 
     public CellView(Post post) {
         cellView = new VBox();
@@ -43,7 +20,16 @@ public class CellView {
         cellView.setPrefWidth(580);
 
         //TODO: separate what varies?
-        logoImageView = new ImageView(new Image("assets/fb.png"));
+        Image logoImage;
+        if (post instanceof FacebookPost)
+            logoImage = new Image("assets/fb.png");
+        else if (post instanceof InstagramPost)
+            logoImage = new Image("assets/ig.png");
+        else if (post instanceof TwitterPost)
+            logoImage = new Image("assets/tw.png");
+        else
+            logoImage = new Image(DEFAULT_IMG_PATH);
+        logoImageView = new ImageView(logoImage);
         cellView.getChildren().add(logoImageView);
         //
         String postUsername = post.getAuthor();
