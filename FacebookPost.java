@@ -7,7 +7,7 @@ public class FacebookPost extends Post
     protected static final Sharer DEFAULT_SHARER = new ShareWithFriends();
     protected static final Privacy DEFAULT_PRIVACY = Privacy.PUBLIC;
 
-    public FacebookPost(String author, String content, LocalDate timestamp, Privacy privacy, Sharer sharer)
+    public FacebookPost(String author, String content, LocalDateTime timestamp, Privacy privacy, Sharer sharer)
     {
         super(author, content, timestamp, sharer);
         this.privacy = privacy;
