@@ -1,13 +1,8 @@
-import java.time.*;
+import java.awt.event.ActionEvent;
 import java.util.*;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
-import javafx.scene.paint.*;
-import javafx.scene.layout.*;
-import javafx.scene.image.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
 
 /**
  * Authors: Tatiana K., Edison L.
@@ -20,17 +15,23 @@ import javafx.geometry.*;
 public class GUIDriver extends Application
 {
     private static Scanner scan = new Scanner(System.in);
+    // This makes the table of cells hostings Post objects
     private GUIView tableView;
+    private PostsCollection posts;
+    private ActionEvent event;
 
     public GUIDriver()
     {
-        // This makes the table of cells hostings Post objects
+        posts = new PostsCollection();
         tableView = new GUIView();
+        /*
         //Add table cells
         //TODO pass in Posts to CellView constructor
         for (int i=0; i<100; i++) {
             tableView.add(new CellView());
         }
+        */
+        //tableView.setPostAction(this::post);
     }
 
     @Override
@@ -92,6 +93,21 @@ public class GUIDriver extends Application
         while(!menuSelect.equalsIgnoreCase("q"));
         */
     }//main()
+
+    public void post(ActionEvent event)
+    {
+        this.event = event;
+        String name = tableView.getNameField();
+        String content = tableView.getMessage();
+        int siteNumber = tableView.getSiteNumber();
+        Privacy privacy = tableView.getPrivacy();
+        boolean saveToCollection = tableView.getSaveToCollection();
+        String userName = tableView.getUserName();
+
+        //TODO: add properties to CellView
+        //tableView.add(new CellView());
+        posts.addPost(name, content, siteNumber, privacy, saveToCollection, userName);
+    }
 
     //Print main menu
     public static void displayMainMenu()
