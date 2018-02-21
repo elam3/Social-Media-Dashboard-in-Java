@@ -25,6 +25,7 @@ public class GUIDriver extends Application
         tableView = new GUIView();
 
         tableView.setPostAction(this::post);
+        tableView.setBoostBtnOnAction(this::boostBtnOnClick);
     }
 
     @Override
@@ -64,6 +65,14 @@ public class GUIDriver extends Application
                 saveToCollection, userName);
 
         this.tableView.show(posts.getPosts());
+    }
+
+    public void boostBtnOnClick(ActionEvent event) {
+        //int count = tableView.getCells().size();
+        //System.out.println("Size of ArrayList<CellView>: " + count);
+        for (CellView cell : tableView.getCells()) {
+            cell.boostLikeCount();
+        }
     }
 
 }//Driver Program

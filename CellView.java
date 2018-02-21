@@ -2,6 +2,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.event.*;
 
 public class CellView {
     
@@ -9,11 +10,15 @@ public class CellView {
     private ImageView   logoImageView;
     private Label       username,
                         timestamp,
-                        msg;
-    private Button      like;
+                        msg,
+                        likeLabel;
+    private Button      likeBtn;
+    private int         likeCount;
     private static final String DEFAULT_IMG_PATH = "default.png";
 
     public CellView(Post post) {
+        likeCount = 0;
+
         cellView = new VBox();
         cellView.getStyleClass().add("cellView");
         cellView.setSpacing(10);
@@ -44,8 +49,35 @@ public class CellView {
         msg = new Label(postMsg);
         cellView.getChildren().add(msg);
         //
-        like = new Button("Like");
-        cellView.getChildren().add(like);
+        HBox likeHBox = new HBox();
+        likeLabel = new Label();
+        reDrawLikeLabel();
+        likeBtn = new Button("Like");
+        likeBtn.setOnAction(this::likeBtnOnClick);
+        likeHBox.setSpacing(10);
+        likeHBox.getChildren().addAll(likeLabel, likeBtn);
+        cellView.getChildren().add(likeHBox);
+    }
+
+    public void likeBtnOnClick(ActionEvent event) {
+        likeCount++;
+        reDrawLikeLabel();
+    }
+    private void reDrawLikeLabel() {
+        likeLabel.setText(Integer.toString(likeCount));
+    }
+    public int getLikeCount() {
+        return likeCount;
+    }
+    public void resetLikeCount() {
+        likeCount = 0;
+        reDrawLikeLabel();
+    }
+    public void boostLikeCount() {
+        while (likeCount<9999) {
+            likeCount++;
+            reDrawLikeLabel();
+        }
     }
 
     public Parent getParent() { return cellView; }
