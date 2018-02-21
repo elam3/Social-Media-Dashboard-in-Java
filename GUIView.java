@@ -23,7 +23,7 @@ public class GUIView {
     private  VBox vBox1;
     public ArrayList<CellView> cells;
     private RadioButton displayPosts, addPost, interact;
-    private Button submitButton, postButton, display;
+    private Button submitButton, postButton, display, boostBtn;
     private ComboBox <Privacy> privacyOption;
     private CheckBox saveToCollection;
     private Label userNameLabel;
@@ -46,6 +46,8 @@ public class GUIView {
         // | | | | | + ...more CellView
         // | | + Pane2 --------------
         // | | | + VBox ------------
+
+        cells = new ArrayList<>();
 
         root = new Group();
         root.getStyleClass().add("root");
@@ -82,8 +84,13 @@ public class GUIView {
         vBox1.setSpacing(V_GAP);
         pane2.getChildren().add(vBox1);
 
+        boostBtn = new Button("Boost Like Counts");
+
         addPost();
         //displayMenuView();
+
+        vBox1.getChildren().add(boostBtn);
+
     }
 
     private void displayMenuView()
@@ -208,10 +215,11 @@ public class GUIView {
                 addPost();
             } else if (displayPosts.isSelected()) {
 
-                for (int i = 0; i < cells.size(); i++)
+                /*for (int i = 0; i < cells.size(); i++)
                 {
                     this.add(cells.get(i));
                 }
+                */
             }
             else if(interact.isSelected())
             {
@@ -285,17 +293,31 @@ public class GUIView {
         cells.add(cellView);
         //tableView.getChildren().add(cellView.getParent());
     }
+    public ArrayList<CellView> getCells() {
+        return cells;
+    }
 
     public void setPostAction(EventHandler<ActionEvent> handler) {
-            postButton.setOnAction(handler);
+        postButton.setOnAction(handler);
     }
 
     public void show(ArrayList<Post> posts) {
+        //Not sure how to draw newest post on top, so
+        //clear the tableView, and re-draw everything
         tableView.getChildren().clear();
+
+        //Remake the arraylist of cell views
+        cells.clear();
+
         for (Post post : posts) {
-            tableView.getChildren().add(new CellView(post).getParent());
+            CellView cell = new CellView(post);
+            cells.add(cell); //Add to ArrayList<CellView>
+            tableView.getChildren().add(cell.getParent());
         }
     }
 
+    public void setBoostBtnOnAction(EventHandler<ActionEvent> handler) {
+        boostBtn.setOnAction(handler);
+    }
 
 }

@@ -71,6 +71,13 @@ public class CellView {
     }
     public void resetLikeCount() {
         likeCount = 0;
+        reDrawLikeLabel();
+    }
+    public void boostLikeCount() {
+        while (likeCount<9999) {
+            likeCount++;
+            reDrawLikeLabel();
+        }
     }
 
     public Parent getParent() { return cellView; }
