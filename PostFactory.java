@@ -33,18 +33,18 @@ public class PostFactory {
     //Create Facebook Post
     private static FacebookPost newFacebookPost(String author, String content, Privacy privacy)
     {
-        return new FacebookPost(author, content, LocalDate.now(), privacy, FacebookPost.DEFAULT_SHARER);
+        return new FacebookPost(author, content, LocalDateTime.now(), privacy, FacebookPost.DEFAULT_SHARER);
     }//newFacebookPost()
 
     //Create Instagram Post
     private static InstagramPost newInstagramPost(String author, String content, boolean saveToCollection)
     {
-        return new InstagramPost(author, content, LocalDate.now(), saveToCollection);
+        return new InstagramPost(author, content, LocalDateTime.now(), saveToCollection);
     }//newInstagramPost()
 
     //Create Twitter Post
     private static TwitterPost newTwitterPost(String author, String content, String userName)
     {
-        return new TwitterPost(author, content, LocalDate.now(), userName);
+        return new TwitterPost(author, content, LocalDateTime.now(), userName);
     }//newTwitterPost()
 }

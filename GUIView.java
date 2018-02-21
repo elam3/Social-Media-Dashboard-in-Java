@@ -290,5 +290,12 @@ public class GUIView {
             postButton.setOnAction(handler);
     }
 
+    public void show(ArrayList<Post> posts) {
+        tableView.getChildren().clear();
+        for (Post post : posts) {
+            tableView.getChildren().add(new CellView(post).getParent());
+        }
+    }
+
 
 }
