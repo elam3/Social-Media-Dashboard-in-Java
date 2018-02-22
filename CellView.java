@@ -7,6 +7,7 @@ import javafx.event.*;
 public class CellView {
     
     private VBox        cellView;       //main wrapper
+    private Image       logoImage;
     private ImageView   logoImageView;
     private Label       username,
                         timestamp,
@@ -15,9 +16,9 @@ public class CellView {
                         interactLabel;
     private Button      likeBtn;
     private int         likeCount;
-    private static final String DEFAULT_IMG_PATH = "default.png";
+    private static final String DEFAULT_IMG_PATH = "assets/default.png";
 
-    public CellView(Post post) {
+    public CellView() {
         likeCount = 0;
 
         cellView = new VBox();
@@ -25,29 +26,17 @@ public class CellView {
         cellView.setSpacing(10);
         cellView.setPrefWidth(580);
 
-        //TODO: separate what varies?
-        Image logoImage;
-        if (post instanceof FacebookPost)
-            logoImage = new Image("assets/fb.png");
-        else if (post instanceof InstagramPost)
-            logoImage = new Image("assets/ig.png");
-        else if (post instanceof TwitterPost)
-            logoImage = new Image("assets/tw.png");
-        else
-            logoImage = new Image(DEFAULT_IMG_PATH);
+        logoImage = new Image(DEFAULT_IMG_PATH);
         logoImageView = new ImageView(logoImage);
         cellView.getChildren().add(logoImageView);
         //
-        String postUsername = post.getAuthor();
-        username = new Label(postUsername);
+        username = new Label();
         cellView.getChildren().add(username);
         //
-        String postTimestamp = post.getTimestamp().toString();
-        timestamp = new Label(postTimestamp);
+        timestamp = new Label();
         cellView.getChildren().add(timestamp);
         //
-        String postMsg = post.getContent();
-        msg = new Label(postMsg);
+        msg = new Label();
         cellView.getChildren().add(msg);
         //
         HBox likeHBox = new HBox();
@@ -58,7 +47,9 @@ public class CellView {
         likeHBox.setSpacing(50);
         likeHBox.getChildren().addAll(likeLabel, likeBtn);
 
-        interactLabel = new Label("");
+        interactLabel = new Label();
+        interactLabel.setVisible(false);
+
         HBox interactHBox = new HBox(likeHBox, interactLabel);
         interactHBox.setSpacing(150);
         cellView.getChildren().add(interactHBox);
@@ -86,23 +77,32 @@ public class CellView {
     }
 
     public void interact() {
-        //interactLabel.setText();
-        String FACEBOOK_ACTION = "\"Location added to your post\"",
-               INSTAGRAM_ACTION = "\"Post sent to friend\"",
-               TWITTER_ACTION = "\"You are following this post\"";
-        switch (GUIView.siteNumber) {
-            case 1:
-                interactLabel.setText(FACEBOOK_ACTION);
-                break;
-            case 2:
-                interactLabel.setText(INSTAGRAM_ACTION);
-                break;
-            case 3:
-                interactLabel.setText(TWITTER_ACTION);
-                break;
-            default: break;
-        }
+        setInteractLabelVisible();
     }
+
+    public void setUsername(String username) {
+        this.username.setText(username);
+    }
+    public void setTimestamp(String timestamp) {
+        this.timestamp.setText(timestamp);
+    }
+    public void setContent(String content) {
+        this.msg.setText(content);
+    }
+    public void setImageLogo(String imgUrl) {
+        logoImageView.setImage(new Image(imgUrl));
+    }
+    public void setInteractLabel(String interact) {
+        interactLabel.setText(interact);
+    }
+    public void setInteractLabelVisible() {
+        interactLabel.setVisible(true);
+    }
+    /*
+                        likeLabel,
+    private Button      likeBtn;
+    private int         likeCount;
+    */
 
     public Parent getParent() { return cellView; }
 }

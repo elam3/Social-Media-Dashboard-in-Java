@@ -51,9 +51,9 @@ public class FacebookPost extends Post
 
     }
 
-    public void addLocation()
+    public String addLocation()
     {
-        System.out.println("Facebook: \"Location added to your post\"");
+        return "\"Location added to your post\"";
     }
 
     // M2 HOMEWORK STATIC

@@ -1,4 +1,5 @@
 import java.util.*;
+import java.time.*;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -65,7 +66,26 @@ public class GUIDriver extends Application
         Post newPost = posts.addPost(name, content, siteNumber, privacy,
                 saveToCollection, userName);
 
-        this.tableView.add(new CellView(newPost));
+        CellView newCellView = new CellView();
+        newCellView.setUsername(newPost.getAuthor());
+        newCellView.setTimestamp(newPost.getTimestamp().toString());
+        newCellView.setContent(newPost.getContent());
+
+        if (newPost instanceof FacebookPost) {
+            newCellView.setImageLogo("assets/fb.png");
+            System.out.println("hey, i'm fb post");
+            newCellView.setInteractLabel( ((FacebookPost)newPost).addLocation());
+        }
+        else if (newPost instanceof InstagramPost) {
+            newCellView.setImageLogo("assets/ig.png");
+            newCellView.setInteractLabel( ((InstagramPost)newPost).sendToFriend());
+        }
+        else if (newPost instanceof TwitterPost) {
+            newCellView.setImageLogo("assets/tw.png");
+            newCellView.setInteractLabel( ((TwitterPost)newPost).follow());
+        }
+
+        this.tableView.add(newCellView);
     }
 
     public void boostBtnOnClick(ActionEvent event) {
