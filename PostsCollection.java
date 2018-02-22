@@ -26,6 +26,17 @@ public class PostsCollection
         return newPost;
     }
 
+    public Post getLastPost()
+    {
+        if(!posts.isEmpty()) {
+            return posts.get(posts.size() - 1);
+        }
+        else
+        {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
     public ArrayList<Post> getPosts() {
         Collections.sort(posts);
         return posts;

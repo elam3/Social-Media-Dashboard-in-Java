@@ -20,7 +20,7 @@ public class GUIView {
     private VBox tableView;
     private final static int    V_GAP       = 20,
                                 PREF_WIDTH  = 600,
-                                PREF_HEIGHT = 800;
+                                PREF_HEIGHT = 700;
     private Group root;
     private  VBox vBox1;
     public ArrayList<CellView> cells;

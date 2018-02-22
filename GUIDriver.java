@@ -16,23 +16,21 @@ import javafx.event.ActionEvent;
  */
 public class GUIDriver extends Application
 {
-    private GUIView tableView;
+    private GUIView view;
 
-    // ArrayList of Maps containing the models,
-    // where each string key points to
-    // a Post object, and their CellView counterpart
-    private ArrayList<Map<String,Object>> masterList;
-    private final static String POST_KEY = "post",
-                                CELL_KEY = "cellView";
+    // Hashtable contains pair of CellView object and Post object,
+    // that relate to each other
+    private Hashtable<Object,Object> table;
+    private Set<Object> keys;
 
     public GUIDriver()
     {
-        tableView = new GUIView();
-        masterList = new ArrayList<>();
+        view = new GUIView();
+        table = new Hashtable<>();
 
-        tableView.setPostAction(this::post);
-        tableView.setBoostBtnOnAction(this::boostBtnOnClick);
-        tableView.interactBtnOnClick(this::setInteractBtn);
+        view.setPostAction(this::post);
+        view.setBoostBtnOnAction(this::boostBtnOnClick);
+        view.interactBtnOnClick(this::setInteractBtn);
     }
 
     @Override
@@ -41,9 +39,9 @@ public class GUIDriver extends Application
         GUIDriver controller = new GUIDriver();
 
         Scene scene = new Scene(
-            controller.tableView.getParent(),
+            controller.view.getParent(),
             1200,
-            800
+            700
         );
 
         scene.getStylesheets().add("assets/style.css");
@@ -63,12 +61,12 @@ public class GUIDriver extends Application
      */
     public void post(ActionEvent event)
     {
-        String name = tableView.getNameField();
-        String content = tableView.getMessage();
-        int siteNumber = tableView.getSiteNumber();
-        Privacy privacy = tableView.getPrivacy();
-        boolean saveToCollection = tableView.getSaveToCollection();
-        String userName = tableView.getUserName();
+        String name = view.getNameField();
+        String content = view.getMessage();
+        int siteNumber = view.getSiteNumber();
+        Privacy privacy = view.getPrivacy();
+        boolean saveToCollection = view.getSaveToCollection();
+        String userName = view.getUserName();
 
         // Create Post object
         Post newPost = PostFactory.newPost(name, content, siteNumber,
@@ -77,11 +75,8 @@ public class GUIDriver extends Application
         // Create CellView object
         CellView newCellView = new CellView();
 
-        // Bookkeeping/wrapper for Post & CellView object
-        HashMap<String,Object> map = new HashMap<>();
-        map.put(POST_KEY, newPost);
-        map.put(CELL_KEY, newCellView);
-        masterList.add(0,map);
+        // Adding the pair of specific CellView and specific Post to the Hashtable
+        table.put(newCellView, newPost);
 
         newCellView.setUsername(newPost.getAuthor());
         LocalDateTime time = newPost.getTimestamp();
@@ -92,42 +87,58 @@ public class GUIDriver extends Application
 
         if (newPost instanceof FacebookPost) {
             newCellView.setImageLogo("assets/fb.png");
-            newCellView.setInteractLabel(
-                ((FacebookPost)newPost).addLocation()
-            );
         }
         else if (newPost instanceof InstagramPost) {
             newCellView.setImageLogo("assets/ig.png");
-            newCellView.setInteractLabel(
-                ((InstagramPost)newPost).sendToFriend()
-            );
         }
         else if (newPost instanceof TwitterPost) {
             newCellView.setImageLogo("assets/tw.png");
-            newCellView.setInteractLabel(
-                ((TwitterPost)newPost).follow()
-            );
         }
 
-        this.tableView.add(newCellView);
+        this.view.add(newCellView);
     }
 
     public void boostBtnOnClick(ActionEvent event) {
-        for (Map<String,Object> map : masterList) {
-            //Post post = (Post)map.get(POST_KEY);
-            CellView cell = (CellView)map.get(CELL_KEY);
-            cell.boostLikeCount();
+
+        keys = table.keySet();
+        for (Object key : keys)
+        {
+            if (key instanceof CellView) {
+                ((CellView) key).boostLikeCount();
+            }
         }
     }
 
     public void setInteractBtn(ActionEvent event) {
-        for (Map<String,Object> map : masterList) {
-            Post post = (Post)map.get(POST_KEY);
-            CellView cell = (CellView)map.get(CELL_KEY);
-            cell.interact();
+        keys = table.keySet();
+        for (Object key : keys)
+        {
+            if (key instanceof CellView) {
+                ((CellView ) key).setInteractLabelVisible();
+                if(table.get(key) instanceof FacebookPost)
+                {
+                    ((CellView ) key).setInteractLabel(
+                            ((FacebookPost) table.get(key)).addLocation()
+                    );
+                }
+                else if(table.get(key) instanceof InstagramPost)
+                {
+                    ((CellView ) key).setInteractLabel(
+                            ((InstagramPost) table.get(key)).sendToFriend()
+                    );
+                }
+                else if(table.get(key) instanceof TwitterPost)
+                {
+                    ((CellView ) key).setInteractLabel(
+                            ((TwitterPost) table.get(key)).follow()
+                    );
+                }
+            }
         }
     }
-    private String getPostType(Post post) {
+
+    private String getPostType(Post post)
+    {
         if (post instanceof FacebookPost) {
             return "Facebook";
         } else if (post instanceof InstagramPost) {
@@ -136,6 +147,7 @@ public class GUIDriver extends Application
             return "Twitter";
         } else throw new IllegalStateException();
     }
+
 }// Driver Program
 
 /**

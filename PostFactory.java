@@ -3,8 +3,6 @@ import java.util.*;
 
 public class PostFactory {
 
-    private static Scanner scan = new Scanner(System.in);
-
     //Create New Post
     public static Post newPost(String author, String content,
             int siteNumberAnswer, Privacy privacy,
