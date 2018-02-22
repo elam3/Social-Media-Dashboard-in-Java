@@ -14,16 +14,17 @@ import javafx.scene.paint.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-//TODO: rename this class? e.g. TableOfPosts ?
 public class GUIView {
 
     private ScrollPane tableViewSP;
     private VBox tableView;
-    private final static int V_GAP = 20;
+    private final static int    V_GAP       = 20,
+                                PREF_WIDTH  = 600,
+                                PREF_HEIGHT = 800;
     private Group root;
     private  VBox vBox1;
     public ArrayList<CellView> cells;
-    private RadioButton displayPosts, addPost, interact;
+    private RadioButton displayPosts, addPostView, interact;
     private Button submitButton, postButton, display, boostBtn, interactBtn;
     private ComboBox <Privacy> privacyOption;
     private CheckBox saveToCollection;
@@ -32,21 +33,15 @@ public class GUIView {
     private TextArea message;
     protected static int siteNumber;
 
-    /**
-     * Make a table of cells, and attach it to the
-     * pane that's passed in.
-     */
     public GUIView() {
-        // + Group ---------------------
-        // | + HBox ------------------
-        // | | + Pane1 --------------
-        // | | | + Scroll Pane -----
-        // | | | | + VBox ----------
-        // | | | | | + CellView ----
-        // | | | | | + CellView ----
-        // | | | | | + ...more CellView
-        // | | + Pane2 --------------
-        // | | | + VBox ------------
+        // + Group -------------------------------------
+        // | + HBox ------------------------------------
+        // | | + Pane1 -------------------| + Pane2 ----
+        // | | | + Scroll Pane -----------| + VBox -----
+        // | | | | + VBox ----------------| | ...
+        // | | | | | + CellView ----------| | Control Panel Related:
+        // | | | | | + CellView ----------| | - adding new posts
+        // | | | | | + ...more CellView---| | - interact w/ posts
 
         cells = new ArrayList<>();
 
@@ -60,7 +55,7 @@ public class GUIView {
         // Left Side Pane : Display Posts Here
         Pane pane1 = new FlowPane();
         pane1.getStyleClass().add("pane1");
-        pane1.setPrefSize(600,800);
+        pane1.setPrefSize(PREF_WIDTH,PREF_HEIGHT);
         hbox.getChildren().add(pane1);
 
         tableViewSP = new ScrollPane();
@@ -76,7 +71,7 @@ public class GUIView {
         // Right Side Pane : Controller Panel Here
         Pane pane2 = new FlowPane();
         pane2.getStyleClass().add("pane2");
-        pane2.setPrefSize(600,800);
+        pane2.setPrefSize(PREF_WIDTH,PREF_HEIGHT);
         hbox.getChildren().add(pane2);
 
         vBox1 = new VBox();
@@ -87,20 +82,21 @@ public class GUIView {
         boostBtn = new Button("Boost Like Counts");
         interactBtn = new Button("Interact with Posts");
 
-        addPost();
+        //TODO: interactive menu
         //displayMenuView();
+
+        //Draw from to collect data for adding a new CellView
+        addPostView();
 
         HBox menuButtons = new HBox(boostBtn, interactBtn);
         vBox1.getChildren().add(menuButtons);
 
     }
 
-    public void interactBtnOnClick(EventHandler<ActionEvent> handler) {
-        interactBtn.setOnAction(handler);
-    }
-
-    /*
-    private void displayMenuView()
+    /**
+     * Draw view for an interactive menu
+     */
+    /*private void displayMenuView()
     {
         Text message = new Text ("What would you like to do?");
         message.setFont(Font.font("Comic Sans MS", 20));
@@ -109,8 +105,8 @@ public class GUIView {
 
         displayPosts = new RadioButton("View all the posts");
         displayPosts.setToggleGroup(displayMenu);
-        addPost = new RadioButton("Add a new Post");
-        addPost.setToggleGroup(displayMenu);
+        addPostView = new RadioButton("Add a new Post");
+        addPostView.setToggleGroup(displayMenu);
         interact = new RadioButton("Interact with posts");
         interact.setToggleGroup(displayMenu);
 
@@ -118,13 +114,13 @@ public class GUIView {
 
         vBox1.setMargin(message, new Insets(100, 200, 50, 200));
         vBox1.setMargin(displayPosts, new Insets(0, 200, 10, 200));
-        vBox1.setMargin(addPost, new Insets(0, 200, 10, 200));
+        vBox1.setMargin(addPostView, new Insets(0, 200, 10, 200));
         vBox1.setMargin(interact, new Insets(0, 200, 10, 200));
         vBox1.setMargin(submitButton, new Insets(100, 275, 50, 275));
 
         vBox1.getChildren().add(message);
         vBox1.getChildren().add(displayPosts);
-        vBox1.getChildren().add(addPost);
+        vBox1.getChildren().add(addPostView);
         vBox1.getChildren().add(interact);
         vBox1.getChildren().add(submitButton);
 
@@ -133,16 +129,19 @@ public class GUIView {
     }
     */
 
-    public void addPost()
+    /**
+     * Draw Pane2 Items
+     */
+    public void addPostView()
     {
         vBox1.getChildren().clear();
 
         Label nameLabel = new Label ("Name:");
-        nameLabel.getStyleClass().add("addPost-nameLabel");
+        nameLabel.getStyleClass().add("addPostView-nameLabel");
         nameLabel.setTextFill(Color.WHITE);
         name = new TextField();
         Label messageLabel = new Label("Message:");
-        messageLabel.getStyleClass().add("addPost-messageLabel");
+        messageLabel.getStyleClass().add("addPostView-messageLabel");
         message = new TextArea();
         message.setWrapText(true);
 
@@ -224,31 +223,6 @@ public class GUIView {
         }
     }
 
-    public Parent getParent()
-    {
-        return root;
-    }
-
-    private void handleAction(ActionEvent event)
-    {
-        if (event.getTarget().equals(submitButton)) {
-            if (addPost.isSelected()) {
-                addPost();
-            } else if (displayPosts.isSelected()) {
-
-                /*for (int i = 0; i < cells.size(); i++)
-                {
-                    this.add(cells.get(i));
-                }
-                */
-            }
-            else if(interact.isSelected())
-            {
-
-            }
-        }
-    }
-
     public String getNameField()
     {
         return name.getText();
@@ -306,23 +280,14 @@ public class GUIView {
     }
 
 
-    //TODO: is this allowed in a View?
     /**
-     * Attaches new cells to the tableView
+     * Attaches a new cell to the tableView
      */
     public void add(CellView cellView) {
         //Add to top of ArrayList<CellView>
         cells.add(0, cellView);
         reDrawCells();
     }
-    public ArrayList<CellView> getCells() {
-        return cells;
-    }
-
-    public void setPostAction(EventHandler<ActionEvent> handler) {
-        postButton.setOnAction(handler);
-    }
-
     public void reDrawCells() {
         tableView.getChildren().clear();
         for (CellView cell : cells) {
@@ -330,8 +295,50 @@ public class GUIView {
         }
     }
 
+
+    /**
+     * Hooks up the postButton to add a new cellView
+     */
+    public void setPostAction(EventHandler<ActionEvent> handler) {
+        postButton.setOnAction(handler);
+    }
+
+    /**
+     * Hooks up the BoostBtn to interact with all cellView's
+     */
     public void setBoostBtnOnAction(EventHandler<ActionEvent> handler) {
         boostBtn.setOnAction(handler);
     }
 
+    /**
+     * Hooks up the interactBtn to call class-specific methods on each cell
+     */
+    public void interactBtnOnClick(EventHandler<ActionEvent> handler) {
+        interactBtn.setOnAction(handler);
+    }
+
+    //TODO: interactive menu's action events
+    /*private void handleAction(ActionEvent event)
+    {
+        if (event.getTarget().equals(submitButton)) {
+            if (addPostView.isSelected()) {
+                addPostView();
+            } else if (displayPosts.isSelected()) {
+                for (int i = 0; i < cells.size(); i++)
+                {
+                    this.add(cells.get(i));
+                }
+            }
+            else if(interact.isSelected())
+            {
+                ;
+            }
+        }
+    }
+    */
+
+    public Parent getParent()
+    {
+        return root;
+    }
 }

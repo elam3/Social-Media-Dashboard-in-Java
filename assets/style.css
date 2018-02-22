@@ -22,14 +22,14 @@
     -fx-border-color: black;
 }
 
-.addPost-nameLabel {
+.addPostView-nameLabel {
     -fx-font-family: "Helvetica";
     -fx-text-fill: white;
     -fx-font-size: 16;
     -fx-font-weight: bold;
 }
 
-.addPost-messageLabel {
+.addPostView-messageLabel {
     -fx-font-family: "Helvetica";
     -fx-text-fill: white;
     -fx-font-size: 16;

@@ -19,7 +19,8 @@ public class CellView {
     private static final String DEFAULT_IMG_PATH = "assets/default.png";
 
     public CellView() {
-        //TODO: move this out
+        //TODO: move this out?
+        //Does likeCount belong in a model? Or in a view? Ctrlr even?
         likeCount = 0;
 
         cellView = new VBox();
@@ -30,17 +31,17 @@ public class CellView {
         logoImage = new Image(DEFAULT_IMG_PATH);
         logoImageView = new ImageView(logoImage);
         cellView.getChildren().add(logoImageView);
-        //
+     
         username = new Label();
         cellView.getChildren().add(username);
-        //
+      
         timestamp = new Label();
         cellView.getChildren().add(timestamp);
-        //
+       
         msg = new Label();
         msg.setWrapText(true);
         cellView.getChildren().add(msg);
-        //
+        
         HBox likeHBox = new HBox();
         likeLabel = new Label();
         reDrawLikeLabel();
@@ -84,6 +85,7 @@ public class CellView {
     private void setInteractLabelVisible() {
         interactLabel.setVisible(true);
     }
+
     public void setInteractLabel(String interact) {
         interactLabel.setText(interact);
     }

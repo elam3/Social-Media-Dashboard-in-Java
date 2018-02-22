@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
  */
 public class GUIDriver extends Application
 {
-    private static Scanner scan = new Scanner(System.in);
     private GUIView tableView;
     private PostsCollection posts;
     private ActionEvent event;
@@ -62,6 +61,9 @@ public class GUIDriver extends Application
         launch(args);
     }
 
+    /**
+     * Create a representation of a Post object as a CellView
+     */
     public void post(ActionEvent event)
     {
         this.event = event;
@@ -72,11 +74,14 @@ public class GUIDriver extends Application
         boolean saveToCollection = tableView.getSaveToCollection();
         String userName = tableView.getUserName();
 
+        // Create Post object
         Post newPost = posts.addPost(name, content, siteNumber, privacy,
                 saveToCollection, userName);
 
+        // Create CellView object
         CellView newCellView = new CellView();
 
+        // Bookkeeping/wrapper for Post & CellView object
         HashMap<String,Object> map = new HashMap<>();
         map.put(POST_KEY, newPost);
         map.put(CELL_KEY, newCellView);
