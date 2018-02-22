@@ -9,6 +9,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
+import javafx.scene.paint.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,6 @@ public class GUIView {
     private Label userNameLabel;
     private TextField name, userName;
     private TextArea message;
-    //private static int siteNumber;
     protected static int siteNumber;
 
     /**
@@ -73,8 +73,7 @@ public class GUIView {
 
         pane1.getChildren().add(tableViewSP);
 
-        //Right Side Pane : Controller Panel Here
-        //TODO: Maybe add controls to create posts here?
+        // Right Side Pane : Controller Panel Here
         Pane pane2 = new FlowPane();
         pane2.getStyleClass().add("pane2");
         pane2.setPrefSize(600,800);
@@ -100,6 +99,7 @@ public class GUIView {
         interactBtn.setOnAction(handler);
     }
 
+    /*
     private void displayMenuView()
     {
         Text message = new Text ("What would you like to do?");
@@ -131,26 +131,40 @@ public class GUIView {
         submitButton.setOnAction(this::handleAction);
 
     }
+    */
 
     public void addPost()
     {
         vBox1.getChildren().clear();
 
         Label nameLabel = new Label ("Name:");
+        nameLabel.getStyleClass().add("addPost-nameLabel");
+        nameLabel.setTextFill(Color.WHITE);
         name = new TextField();
-        Label messageLabel = new Label("Message");
+        Label messageLabel = new Label("Message:");
+        messageLabel.getStyleClass().add("addPost-messageLabel");
         message = new TextArea();
+        message.setWrapText(true);
 
-        ObservableList<String> siteOption = FXCollections.observableArrayList(
+        ObservableList<String> siteOption =
+            FXCollections.observableArrayList(
                 "Facebook Post",
                 "Instagram Post",
                 "Twitter Post"
         );
-        ComboBox <String> siteOptionBox = new ComboBox(siteOption);
-        siteOptionBox.setValue("Choose site");
-        siteOptionBox.getSelectionModel().selectedItemProperty().addListener(this::selectSite);
 
-        ObservableList<Privacy> privacy = FXCollections.observableArrayList(Arrays.asList(Privacy.values()));
+        ComboBox <String> siteOptionBox = new ComboBox(siteOption);
+
+        siteOptionBox.setValue("Choose site");
+
+        siteOptionBox.getSelectionModel().selectedItemProperty()
+            .addListener(this::selectSite);
+
+        ObservableList<Privacy> privacy =
+            FXCollections.observableArrayList(
+                Arrays.asList(Privacy.values())
+        );
+
         privacyOption = new ComboBox(privacy);
         privacyOption.setValue(Privacy.PUBLIC);
         privacyOption.setVisible(false);
@@ -297,7 +311,8 @@ public class GUIView {
      * Attaches new cells to the tableView
      */
     public void add(CellView cellView) {
-        cells.add(cellView);
+        //Add to top of ArrayList<CellView>
+        cells.add(0, cellView);
         reDrawCells();
     }
     public ArrayList<CellView> getCells() {

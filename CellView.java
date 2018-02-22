@@ -19,6 +19,7 @@ public class CellView {
     private static final String DEFAULT_IMG_PATH = "assets/default.png";
 
     public CellView() {
+        //TODO: move this out
         likeCount = 0;
 
         cellView = new VBox();
@@ -37,6 +38,7 @@ public class CellView {
         cellView.getChildren().add(timestamp);
         //
         msg = new Label();
+        msg.setWrapText(true);
         cellView.getChildren().add(msg);
         //
         HBox likeHBox = new HBox();
@@ -77,32 +79,39 @@ public class CellView {
     }
 
     public void interact() {
-        setInteractLabelVisible();
+        this.setInteractLabelVisible();
     }
-
-    public void setUsername(String username) {
-        this.username.setText(username);
-    }
-    public void setTimestamp(String timestamp) {
-        this.timestamp.setText(timestamp);
-    }
-    public void setContent(String content) {
-        this.msg.setText(content);
-    }
-    public void setImageLogo(String imgUrl) {
-        logoImageView.setImage(new Image(imgUrl));
+    private void setInteractLabelVisible() {
+        interactLabel.setVisible(true);
     }
     public void setInteractLabel(String interact) {
         interactLabel.setText(interact);
     }
-    public void setInteractLabelVisible() {
-        interactLabel.setVisible(true);
+
+    public String getUsername() {
+        return this.username.getText();
     }
-    /*
-                        likeLabel,
-    private Button      likeBtn;
-    private int         likeCount;
-    */
+    public void setUsername(String username) {
+        this.username.setText(username);
+    }
+
+    public String getTimestamp() {
+        return this.timestamp.getText();
+    }
+    public void setTimestamp(String timestamp) {
+        this.timestamp.setText(timestamp);
+    }
+
+    public String getContent() {
+        return this.msg.getText();
+    }
+    public void setContent(String content) {
+        this.msg.setText(content);
+    }
+
+    public void setImageLogo(String imgUrl) {
+        logoImageView.setImage(new Image(imgUrl));
+    }
 
     public Parent getParent() { return cellView; }
 }

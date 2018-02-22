@@ -1,5 +1,6 @@
 import java.util.*;
 import java.time.*;
+import java.time.format.*;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -19,11 +20,14 @@ public class GUIDriver extends Application
     private GUIView tableView;
     private PostsCollection posts;
     private ActionEvent event;
+    private Post newPost;
 
     public GUIDriver()
     {
         posts = new PostsCollection();
         tableView = new GUIView();
+
+        newPost = null;
 
         tableView.setPostAction(this::post);
         tableView.setBoostBtnOnAction(this::boostBtnOnClick);
@@ -63,26 +67,35 @@ public class GUIDriver extends Application
         boolean saveToCollection = tableView.getSaveToCollection();
         String userName = tableView.getUserName();
 
-        Post newPost = posts.addPost(name, content, siteNumber, privacy,
+        newPost = posts.addPost(name, content, siteNumber, privacy,
                 saveToCollection, userName);
 
         CellView newCellView = new CellView();
         newCellView.setUsername(newPost.getAuthor());
-        newCellView.setTimestamp(newPost.getTimestamp().toString());
+        LocalDateTime time = newPost.getTimestamp();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy hh:mm:ss a");
+        String timestamp = time.format(formatter);
+        newCellView.setTimestamp(timestamp);
+        //newCellView.setTimestamp(newPost.getTimestamp().toString());
         newCellView.setContent(newPost.getContent());
 
         if (newPost instanceof FacebookPost) {
             newCellView.setImageLogo("assets/fb.png");
-            System.out.println("hey, i'm fb post");
-            newCellView.setInteractLabel( ((FacebookPost)newPost).addLocation());
+            newCellView.setInteractLabel(
+                ((FacebookPost)newPost).addLocation()
+            );
         }
         else if (newPost instanceof InstagramPost) {
             newCellView.setImageLogo("assets/ig.png");
-            newCellView.setInteractLabel( ((InstagramPost)newPost).sendToFriend());
+            newCellView.setInteractLabel(
+                ((InstagramPost)newPost).sendToFriend()
+            );
         }
         else if (newPost instanceof TwitterPost) {
             newCellView.setImageLogo("assets/tw.png");
-            newCellView.setInteractLabel( ((TwitterPost)newPost).follow());
+            newCellView.setInteractLabel(
+                ((TwitterPost)newPost).follow()
+            );
         }
 
         this.tableView.add(newCellView);
