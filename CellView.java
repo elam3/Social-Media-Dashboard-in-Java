@@ -86,7 +86,22 @@ public class CellView {
     }
 
     public void interact() {
-        //interactLabel.;
+        //interactLabel.setText();
+        String FACEBOOK_ACTION = "\"Location added to your post\"",
+               INSTAGRAM_ACTION = "\"Post sent to friend\"",
+               TWITTER_ACTION = "\"You are following this post\"";
+        switch (GUIView.siteNumber) {
+            case 1:
+                interactLabel.setText(FACEBOOK_ACTION);
+                break;
+            case 2:
+                interactLabel.setText(INSTAGRAM_ACTION);
+                break;
+            case 3:
+                interactLabel.setText(TWITTER_ACTION);
+                break;
+            default: break;
+        }
     }
 
     public Parent getParent() { return cellView; }

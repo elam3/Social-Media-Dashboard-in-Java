@@ -29,7 +29,8 @@ public class GUIView {
     private Label userNameLabel;
     private TextField name, userName;
     private TextArea message;
-    private int siteNumber;
+    //private static int siteNumber;
+    protected static int siteNumber;
 
     /**
      * Make a table of cells, and attach it to the
@@ -90,7 +91,8 @@ public class GUIView {
         addPost();
         //displayMenuView();
 
-        vBox1.getChildren().add(boostBtn);
+        HBox menuButtons = new HBox(boostBtn, interactBtn);
+        vBox1.getChildren().add(menuButtons);
 
     }
 
