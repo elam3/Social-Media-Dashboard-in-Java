@@ -20,14 +20,19 @@ public class GUIDriver extends Application
     private GUIView tableView;
     private PostsCollection posts;
     private ActionEvent event;
-    private Post newPost;
+
+    //ArrayList of Maps,
+    //where each string key points to
+    //a Post object, and their CellView counterpart
+    private ArrayList<Map<String,Object>> masterList;
+    private final static String POST_KEY = "post",
+                                CELL_KEY = "cellView";
 
     public GUIDriver()
     {
         posts = new PostsCollection();
         tableView = new GUIView();
-
-        newPost = null;
+        masterList = new ArrayList<>();
 
         tableView.setPostAction(this::post);
         tableView.setBoostBtnOnAction(this::boostBtnOnClick);
@@ -67,16 +72,21 @@ public class GUIDriver extends Application
         boolean saveToCollection = tableView.getSaveToCollection();
         String userName = tableView.getUserName();
 
-        newPost = posts.addPost(name, content, siteNumber, privacy,
+        Post newPost = posts.addPost(name, content, siteNumber, privacy,
                 saveToCollection, userName);
 
         CellView newCellView = new CellView();
+
+        HashMap<String,Object> map = new HashMap<>();
+        map.put(POST_KEY, newPost);
+        map.put(CELL_KEY, newCellView);
+        masterList.add(0,map);
+
         newCellView.setUsername(newPost.getAuthor());
         LocalDateTime time = newPost.getTimestamp();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy hh:mm:ss a");
         String timestamp = time.format(formatter);
         newCellView.setTimestamp(timestamp);
-        //newCellView.setTimestamp(newPost.getTimestamp().toString());
         newCellView.setContent(newPost.getContent());
 
         if (newPost instanceof FacebookPost) {
@@ -102,15 +112,28 @@ public class GUIDriver extends Application
     }
 
     public void boostBtnOnClick(ActionEvent event) {
-        for (CellView cell : tableView.getCells()) {
+        for (Map<String,Object> map : masterList) {
+            //Post post = (Post)map.get(POST_KEY);
+            CellView cell = (CellView)map.get(CELL_KEY);
             cell.boostLikeCount();
         }
     }
 
     public void setInteractBtn(ActionEvent event) {
-        for (CellView cell : tableView.getCells()) {
+        for (Map<String,Object> map : masterList) {
+            Post post = (Post)map.get(POST_KEY);
+            CellView cell = (CellView)map.get(CELL_KEY);
             cell.interact();
         }
+    }
+    private String getPostType(Post post) {
+        if (post instanceof FacebookPost) {
+            return "Facebook";
+        } else if (post instanceof InstagramPost) {
+            return "Instagram";
+        } else if (post instanceof TwitterPost) {
+            return "Twitter";
+        } else throw new IllegalStateException();
     }
 }//Driver Program
 
