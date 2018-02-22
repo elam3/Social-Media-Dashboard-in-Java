@@ -56,8 +56,8 @@ public class InstagramPost extends Post
 
     }
 
-    public void sendToFriend()
+    public String sendToFriend()
     {
-        System.out.println("Instagram: \"Post sent to friend\"");
+        return "\"Post sent to friend\"";
     }
 }

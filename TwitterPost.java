@@ -49,8 +49,8 @@ public class TwitterPost extends Post
         System.out.println("Twitter Post deleted");
     }
 
-    public void follow()
+    public String follow()
     {
-        System.out.println("Twitter : \"You are following this post\"");
+        return "\"You are following this post\"";
     }
 }

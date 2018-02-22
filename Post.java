@@ -67,14 +67,6 @@ public abstract class Post implements Comparable<Post>
         this.sharer = sharer;
     }
 
-    // I don't think we need setter for timestamp
-    /*
-    public void setTimestamp(Date timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-    */
-
     public abstract void deletePost();
 
     public void share()
