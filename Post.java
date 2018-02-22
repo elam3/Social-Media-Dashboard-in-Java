@@ -32,7 +32,6 @@ public abstract class Post implements Comparable<Post>
         this.timestamp = timestamp;
         postsCount++;
         this.sharer = sharer;
-
     }
 
 

@@ -79,12 +79,14 @@ public class CellView {
         }
     }
 
-    public void interact() {
+    /*public void interact() {
         this.setInteractLabelVisible();
     }
-    private void setInteractLabelVisible() {
+    */
+    public void setInteractLabelVisible() {
         interactLabel.setVisible(true);
     }
+
 
     public void setInteractLabel(String interact) {
         interactLabel.setText(interact);
