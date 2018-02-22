@@ -82,10 +82,10 @@ public class GUIView {
         boostBtn = new Button("Boost Like Counts");
         interactBtn = new Button("Interact with Posts");
 
-        //TODO: interactive menu
+        // TODO: interactive menu
         //displayMenuView();
 
-        //Draw from to collect data for adding a new CellView
+        // Draw from to collect data for adding a new CellView
         addPostView();
 
         HBox menuButtons = new HBox(boostBtn, interactBtn);
@@ -317,7 +317,7 @@ public class GUIView {
         interactBtn.setOnAction(handler);
     }
 
-    //TODO: interactive menu's action events
+    // TODO: interactive menu's action events
     /*private void handleAction(ActionEvent event)
     {
         if (event.getTarget().equals(submitButton)) {

@@ -17,19 +17,16 @@ import javafx.event.ActionEvent;
 public class GUIDriver extends Application
 {
     private GUIView tableView;
-    private PostsCollection posts;
-    private ActionEvent event;
 
-    //ArrayList of Maps,
-    //where each string key points to
-    //a Post object, and their CellView counterpart
+    // ArrayList of Maps containing the models,
+    // where each string key points to
+    // a Post object, and their CellView counterpart
     private ArrayList<Map<String,Object>> masterList;
     private final static String POST_KEY = "post",
                                 CELL_KEY = "cellView";
 
     public GUIDriver()
     {
-        posts = new PostsCollection();
         tableView = new GUIView();
         masterList = new ArrayList<>();
 
@@ -66,7 +63,6 @@ public class GUIDriver extends Application
      */
     public void post(ActionEvent event)
     {
-        this.event = event;
         String name = tableView.getNameField();
         String content = tableView.getMessage();
         int siteNumber = tableView.getSiteNumber();
@@ -75,8 +71,8 @@ public class GUIDriver extends Application
         String userName = tableView.getUserName();
 
         // Create Post object
-        Post newPost = posts.addPost(name, content, siteNumber, privacy,
-                saveToCollection, userName);
+        Post newPost = PostFactory.newPost(name, content, siteNumber,
+                privacy, saveToCollection, userName);
 
         // Create CellView object
         CellView newCellView = new CellView();
@@ -140,7 +136,7 @@ public class GUIDriver extends Application
             return "Twitter";
         } else throw new IllegalStateException();
     }
-}//Driver Program
+}// Driver Program
 
 /**
  * TODO:
