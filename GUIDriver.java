@@ -61,15 +61,14 @@ public class GUIDriver extends Application
         boolean saveToCollection = tableView.getSaveToCollection();
         String userName = tableView.getUserName();
 
-        posts.addPost(name, content, siteNumber, privacy,
+        Post newPost = posts.addPost(name, content, siteNumber, privacy,
                 saveToCollection, userName);
 
-        this.tableView.show(posts.getPosts());
+        this.tableView.add(new CellView(newPost));
+        //this.tableView.show(posts.getPosts());
     }
 
     public void boostBtnOnClick(ActionEvent event) {
-        //int count = tableView.getCells().size();
-        //System.out.println("Size of ArrayList<CellView>: " + count);
         for (CellView cell : tableView.getCells()) {
             cell.boostLikeCount();
         }

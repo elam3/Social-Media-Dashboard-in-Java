@@ -291,6 +291,7 @@ public class GUIView {
      */
     public void add(CellView cellView) {
         cells.add(cellView);
+        reDrawPosts();
         //tableView.getChildren().add(cellView.getParent());
     }
     public ArrayList<CellView> getCells() {
@@ -299,6 +300,13 @@ public class GUIView {
 
     public void setPostAction(EventHandler<ActionEvent> handler) {
         postButton.setOnAction(handler);
+    }
+
+    public void reDrawPosts() {
+        tableView.getChildren().clear();
+        for (CellView cell : cells) {
+            tableView.getChildren().add(cell.getParent());
+        }
     }
 
     public void show(ArrayList<Post> posts) {
