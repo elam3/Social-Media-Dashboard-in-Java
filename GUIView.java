@@ -23,7 +23,7 @@ public class GUIView {
     private  VBox vBox1;
     public ArrayList<CellView> cells;
     private RadioButton displayPosts, addPost, interact;
-    private Button submitButton, postButton, display, boostBtn;
+    private Button submitButton, postButton, display, boostBtn, interactBtn;
     private ComboBox <Privacy> privacyOption;
     private CheckBox saveToCollection;
     private Label userNameLabel;
@@ -85,12 +85,17 @@ public class GUIView {
         pane2.getChildren().add(vBox1);
 
         boostBtn = new Button("Boost Like Counts");
+        interactBtn = new Button("Interact with Posts");
 
         addPost();
         //displayMenuView();
 
         vBox1.getChildren().add(boostBtn);
 
+    }
+
+    public void interactBtnOnClick(EventHandler<ActionEvent> handler) {
+        interactBtn.setOnAction(handler);
     }
 
     private void displayMenuView()
@@ -291,8 +296,7 @@ public class GUIView {
      */
     public void add(CellView cellView) {
         cells.add(cellView);
-        reDrawPosts();
-        //tableView.getChildren().add(cellView.getParent());
+        reDrawCells();
     }
     public ArrayList<CellView> getCells() {
         return cells;
@@ -302,24 +306,9 @@ public class GUIView {
         postButton.setOnAction(handler);
     }
 
-    public void reDrawPosts() {
+    public void reDrawCells() {
         tableView.getChildren().clear();
         for (CellView cell : cells) {
-            tableView.getChildren().add(cell.getParent());
-        }
-    }
-
-    public void show(ArrayList<Post> posts) {
-        //Not sure how to draw newest post on top, so
-        //clear the tableView, and re-draw everything
-        tableView.getChildren().clear();
-
-        //Remake the arraylist of cell views
-        cells.clear();
-
-        for (Post post : posts) {
-            CellView cell = new CellView(post);
-            cells.add(cell); //Add to ArrayList<CellView>
             tableView.getChildren().add(cell.getParent());
         }
     }

@@ -11,7 +11,8 @@ public class CellView {
     private Label       username,
                         timestamp,
                         msg,
-                        likeLabel;
+                        likeLabel,
+                        interactLabel;
     private Button      likeBtn;
     private int         likeCount;
     private static final String DEFAULT_IMG_PATH = "default.png";
@@ -54,9 +55,13 @@ public class CellView {
         reDrawLikeLabel();
         likeBtn = new Button("Like");
         likeBtn.setOnAction(this::likeBtnOnClick);
-        likeHBox.setSpacing(10);
+        likeHBox.setSpacing(50);
         likeHBox.getChildren().addAll(likeLabel, likeBtn);
-        cellView.getChildren().add(likeHBox);
+
+        interactLabel = new Label("");
+        HBox interactHBox = new HBox(likeHBox, interactLabel);
+        interactHBox.setSpacing(150);
+        cellView.getChildren().add(interactHBox);
     }
 
     public void likeBtnOnClick(ActionEvent event) {
@@ -78,6 +83,10 @@ public class CellView {
             likeCount++;
             reDrawLikeLabel();
         }
+    }
+
+    public void interact() {
+        //interactLabel.;
     }
 
     public Parent getParent() { return cellView; }

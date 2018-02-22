@@ -26,6 +26,7 @@ public class GUIDriver extends Application
 
         tableView.setPostAction(this::post);
         tableView.setBoostBtnOnAction(this::boostBtnOnClick);
+        tableView.interactBtnOnClick(this::setInteractBtn);
     }
 
     @Override
@@ -65,7 +66,6 @@ public class GUIDriver extends Application
                 saveToCollection, userName);
 
         this.tableView.add(new CellView(newPost));
-        //this.tableView.show(posts.getPosts());
     }
 
     public void boostBtnOnClick(ActionEvent event) {
@@ -74,6 +74,11 @@ public class GUIDriver extends Application
         }
     }
 
+    public void setInteractBtn(ActionEvent event) {
+        for (CellView cell : tableView.getCells()) {
+            cell.interact();
+        }
+    }
 }//Driver Program
 
 /**
